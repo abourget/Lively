@@ -2,21 +2,25 @@
   Alexandre Bourget et Jean-Maxime Couillard, Hackathon HTML5 du 26 octobre 2011.
 */
 
-var socket, dropbox;
+var dropbox;
+var livefeed, moderator, publisher;
 
 jQuery(document).ready(function(){
-
     // Define socket connection
-    socket = io.connect('http://localhost');
-    dropbox = document.getElementById("dropbox");
+    livefeed = io.connect('/livefeed');
+    moderator = io.connect('/moderator');
+    publisher = io.connect('/publisher');
 
     // Defnie socket events
-    socket.on('news', function (data) {
-      console.log(data);
-      socket.emit('my other event', { my: 'data' });
+    livefeed.on('new_item', function(data) {
+        console.log("New item", data);
+    });
+    moderator.on('new_trash', function(data) {
+        console.log("New trash", data);
     });
 	
     // Init event handlers
+    dropbox = document.getElementById("dropbox");
     dropbox.addEventListener("dragenter", noopHandler, false);
     dropbox.addEventListener("dragexit", noopHandler, false);
     dropbox.addEventListener("dragover", noopHandler, false);
@@ -29,9 +33,9 @@ jQuery(document).ready(function(){
 
     
 function sendPublisherText(e) {
-    if(e.wich == 13) {
+    if(e.which == 13) {
         var val = $("#publisherText").val();
-        socket.emit(val);
+        publisher.json.emit('publish', {type: "text", data: val});
         console.log("emitting", val);
     }
 };
