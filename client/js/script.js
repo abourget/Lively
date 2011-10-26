@@ -23,12 +23,18 @@ jQuery(document).ready(function(){
     dropbox.addEventListener("drop", drop, false);
     
     // Publisher events
-    $("#publisherText").keypress(function(e) {
-        if(e.wich == 13) {
-            socket.emit($(this).html());
-        }
-    });
+    $("#publisherText").keypress(sendPublisherText);
+          
 })
+
+    
+function sendPublisherText(e) {
+    if(e.wich == 13) {
+        var val = $("#publisherText").val();
+        socket.emit(val);
+        console.log("emitting", val);
+    }
+};
 
 
 function noopHandler(evt) {

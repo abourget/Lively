@@ -39,13 +39,41 @@
 
   <div id="container">
     <header>
-
+      <h1>YouPush my dear</h1>
     </header>
     <div id="main" role="main">
 	
 		<div id="dropbox"><span id="droplabel">Drop file here...</span></div>
 		<img id="preview" alt="[ preview will display here ]" />
 
+
+        <div id="live_feed">
+          <!-- Ici, on va avoir le LIVE FEED pour TOUT le monde, grand public compris -->
+        </div>
+
+        <div id="publisher">
+          <!-- Ici on va avoir les contrôles pour ENVOYER des choses -->
+
+          <input type="text" id="publisherText" />
+
+        </div>
+        <div id="moderator">
+          <div id="live_trash">
+            <!-- Ici va arriver TOUT le stock de tout le monde -->
+
+          </div>
+          <div id="nuggets">
+            <!-- Ici on va avoir les choses qu'on a sélectionné dans le trash -->
+          </div>
+          <div id="templates">
+            <!-- Ici on va avoir les templates, en phase 2, pour formatter l'output. -->
+
+          </div>
+          <div id="broadcast">
+            <!-- Ici, on va juste dropper ce qu'on veut publier et ça PART en live -->
+
+          </div>
+        </div>
     </div>
     <footer>
 
@@ -61,7 +89,7 @@
 
 
   <!-- scripts concatenated and minified via ant build script-->
-  <script src="socket.io/socket.io.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script defer src="js/plugins.js"></script>
   <script defer src="js/script.js"></script>
   <!-- end scripts-->
