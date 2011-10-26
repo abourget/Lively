@@ -1,5 +1,5 @@
 /* Author: 
-
+  Alexandre Bourget et Jean-Maxime Couillard, Hackathon HTML5 du 26 octobre 2011.
 */
 
 var socket, dropbox;
