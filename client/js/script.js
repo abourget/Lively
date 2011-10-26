@@ -53,6 +53,8 @@ function publish_snippet(nugget_el) {
     moderator.emit('broadcast', data);
 }
 
+
+
     
 function sendPublisherText(e) {
     if(e.which == 13) {
