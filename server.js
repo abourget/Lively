@@ -108,13 +108,13 @@ Server.prototype = {
 
         switch (path) {
         case '/':
-            this.sendFile(res, __dirname + '/index.html', '.html');
+            this.sendFile(res, __dirname + '/client/index.html', '.html');
             // TODO(smus): Swap comments to serve dj app:
             //this.sendFile(res, __dirname + '/../index.html', '.html');
-            this.sendFile(res, __dirname + '/index.html', '.html');
+            this.sendFile(res, __dirname + '/client/index.html', '.html');
             break;
         case '/chat.html':
-            this.sendFile(res, __dirname + '/chat.html', '.html');
+            this.sendFile(res, __dirname + '/client/chat.html', '.html');
             break;
         case '/proxy':
             this.proxy(req, res);
@@ -122,7 +122,7 @@ Server.prototype = {
         default:
             // TODO(smus): Swap comments to serve dj app:
             //this.sendFile(res, __dirname + '/..' + path, ext);
-            this.sendFile(res, __dirname + path, ext);
+            this.sendFile(res, __dirname + '/client' + path, ext);
         }
     },
 
@@ -270,6 +270,7 @@ Server.prototype = {
         return path;
     }
 };
+
 
 var server = new Server();
 
