@@ -22,8 +22,12 @@ jQuery(document).ready(function(){
     dropbox.addEventListener("dragover", noopHandler, false);
     dropbox.addEventListener("drop", drop, false);
     
-    console.log(dropbox);
-
+    // Publisher events
+    $("#publisherText").keypress(function(e) {
+        if(e.wich == 13) {
+            socket.emit($(this).html());
+        }
+    });
 })
 
 
