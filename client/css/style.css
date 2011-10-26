@@ -243,6 +243,39 @@ td { vertical-align: top; }
   border: 1px solid black;
 }
 
+
+#live_feed .item {
+    background-image: -webkit-gradient(
+    	linear,
+    	left bottom,
+    	left top,
+    	color-stop(0.49, rgb(237,237,237)),
+    	color-stop(0.75, rgb(250,250,250))
+    );
+    
+    width:100%;    
+    border: 1px #CCC solid;
+    border-radius: 15px;
+    margin: 10px;
+    display: inline-block;    
+}
+
+
+#live_feed .item .text {
+    display: inline-block;
+}
+
+#live_feed .item .thumb {
+    width:80px;
+    height:80px;
+    
+    border: 1px #CCC solid;
+    border-radius: 15px;
+    
+    margin: 10px;
+    overflow:hidden;
+}
+
 #publisher {
   displouay: none;
 }
