@@ -43,10 +43,6 @@
     </header>
     
     
-    <div id="sidebar">
-        <div id="moderatorBtn">X</div>
-    </div>
-    
     <div id="main" role="main">
 	
         <h2>Live Feed</h2>
@@ -73,13 +69,19 @@
         <div id="publisher">
         <!-- Ici on va avoir les contrôles pour ENVOYER des choses -->
 
-        <input type="text" id="publisherText" />
-      	<div id="dropbox"><span id="droplabel">Drop file here...</span></div>
-  		<img id="preview" alt="[ preview will display here ]" />
-
+        <div class="content-wrapper">
+            <input type="text" id="publisherText" />
+      	    <div id="dropbox"><span id="droplabel">Drop file here...</span></div>
+  		    <img id="preview" alt="[ preview will display here ]" />
+        </div>
 
         </div>
+        
+        
         <div id="moderator">
+            
+            <div id="moderatorBtn">^^^</div>
+                
           <div id="live_trash">
             <h2>Live trash coming in...</h2>
             <!-- Ici va arriver TOUT le stock de tout le monde -->
