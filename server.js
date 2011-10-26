@@ -51,40 +51,42 @@ function Server() {
     var users = {};
 
     var chat = io.of('/youpush').on('connection', function(socket) {
+        socket.json.emit("bob", {hello: "bob"});
 
-        socket.json.emit('userlist', {senderID: socket.id, users: users});
 
-        socket.on('setnickname', function(data) {
+        // socket.on('setnickname', function(data) {
 
-            socket.set('profileid', data.id, function() {
-                users[data.id] = data;
+        //     socket.set('profileid', data.id, function() {
+        //         users[data.id] = data;
 
-                chat.json.emit('newuser', {
-                    senderID: socket.id,
-                    displayName: data.displayName,
-                    profileId: data.id,
-                    users: users
-                }); // broadcast
-                //socket.json.emit('newuser', {nickname: nickname, users: users});
-            });
-        });
+        //         chat.json.emit('newuser', {
+        //             senderID: socket.id,
+        //             displayName: data.displayName,
+        //             profileId: data.id,
+        //             users: users
+        //         }); // broadcast
+        //         //socket.json.emit('newuser', {nickname: nickname, users: users});
+        //     });
+        // });
 
-        socket.on('chat', function(data) {
-            socket.get('profileid', function(err, profileId) {
+        // socket.on('chat', function(data) {
+        //     socket.get('profileid', function(err, profileId) {
 
-                chat.json.emit('chat', {
-                    senderID: socket.id,
-                    msg: data.msg, 
-                    displayName: users[profileId].displayName, // TODO(ericbidelman): Use data.displayName instead from client?
-                    profileId: profileId
-                });
+        //         chat.json.emit('chat', {
+        //             senderID: socket.id,
+        //             msg: data.msg, 
+        //             displayName: users[profileId].displayName, // TODO(ericbidelman): Use data.displayName instead from client?
+        //             profileId: profileId
+        //         });
 
-            });
-        });
+        //     });
+        // });
 
         socket.on('changeAvatar', function(data){      
+            console.log("Changin avatar please :)");
         });
         socket.on('disconnect', function() {
+            console.log("SOCKET DISCONNECTED");
         });
     });
 
