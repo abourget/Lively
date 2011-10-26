@@ -22,9 +22,19 @@ jQuery(document).ready(function(){
     dropbox.addEventListener("dragover", noopHandler, false);
     dropbox.addEventListener("drop", drop, false);
     
-    console.log(dropbox);
-
+    // Publisher events
+    $("#publisherText").keypress(sendPublisherText);
+          
 })
+
+    
+function sendPublisherText(e) {
+    if(e.wich == 13) {
+        var val = $("#publisherText").val();
+        socket.emit(val);
+        console.log("emitting", val);
+    }
+};
 
 
 function noopHandler(evt) {
