@@ -36,7 +36,6 @@ jQuery(document).ready(function(){
     
     // Publisher events
     $("#publisherText").keypress(sendPublisherText);
-    
 
     // Moderator drag/drop events
     var tplsrcs = document.querySelectorAll('.tplsrc');
@@ -105,6 +104,8 @@ function tplsrcDrop(e) {
     var srcDiv = e.srcElement;
     var targetDiv = e.targetElement;
     
+    console.log(targetDiv);
+    
     //FONCTION
 }
 
@@ -116,6 +117,7 @@ function nuggetDrop(e) {
     console.log("Droped", srcDiv, targetDiv, arguments);
     $(e.targetElement).html('boo');
     //FONCTION
+    console.log(targetDiv);
 }
 
 

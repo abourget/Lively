@@ -218,7 +218,7 @@ header {
 }
 
 body {
-	font-family: 'Quicksand', sans-serif;
+	font-family: 'Open Sans', sans-serif;
     background: white url('/img/bg.jpg') repeat 0 0;
     margin-left: 15px;
     margin-right: 15px;
@@ -295,7 +295,8 @@ h2 {
 }
 
 
-.item {
+.item, 
+.template {
     background-image: -webkit-gradient(
     	linear,
     	left bottom,
@@ -312,28 +313,17 @@ h2 {
     position: relative;
 }
 
-.item .content-wrapper {    
+.item .content-wrapper,
+.template .content-wrapper {    
     display: inline-block;
     margin:5px;
 }
 
-.item .text {
+.item .text,
+.template .text {
     display: inline-block;
     float: left;
     margin: 10px 2px;
-}
-
-.item .thumb {
-    display: inline-block;
-    float: left;
-
-    width:80px;
-    height:80px;
-    
-    border: 1px #CCC solid;
-    border-radius: 15px;
-    
-    overflow:hidden;
 }
 
 /* publisher */
@@ -662,10 +652,6 @@ button.publish, button.keep {
 	background: -moz-linear-gradient(top,  #f171ab,  #feb1d3);
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f171ab', endColorstr='#feb1d3');
 }
-
-
-
-
 
 
 
