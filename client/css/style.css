@@ -364,20 +364,19 @@ button.publish, button.keep {
 
 
 #live_trash {
-  display: none;
-  
 }
 
 #nuggets {
-  display: none;
 }
 
 #templates {
-  display: none;
 }
 
 #broadcast {
-  display: none;
+  height: 150px;
+  border: 4px black dotted;
+  padding: 10px;
+  margin: 10px;
 }
 
 
