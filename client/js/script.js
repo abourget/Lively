@@ -29,7 +29,7 @@ jQuery(document).ready(function(){
 
     
 function sendPublisherText(e) {
-    if(e.wich == 13) {
+    if(e.which == 13) {
         var val = $("#publisherText").val();
         socket.emit(val);
         console.log("emitting", val);

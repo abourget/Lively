@@ -244,7 +244,7 @@ td { vertical-align: top; }
 }
 
 #publisher {
-  display: none;
+  /*display: none;*/
 }
 
 #moderator {
