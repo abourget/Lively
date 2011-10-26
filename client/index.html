@@ -28,6 +28,14 @@
 
   <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
 
+	<script>
+	  var socket = io.connect('http://localhost');
+	  socket.on('news', function (data) {
+	    console.log(data);
+	    socket.emit('my other event', { my: 'data' });
+	  });
+	</script>
+
   <!-- All JavaScript at the bottom, except for Modernizr / Respond.
        Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
        For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
@@ -41,6 +49,9 @@
 
     </header>
     <div id="main" role="main">
+	
+		<div id="dropbox"><span id="droplabel">Drop file here...</span></div>
+		<img id="preview" alt="[ preview will display here ]" />
 
     </div>
     <footer>
@@ -57,6 +68,7 @@
 
 
   <!-- scripts concatenated and minified via ant build script-->
+  <script src="/socket.io/socket.io.js"></script>
   <script defer src="js/plugins.js"></script>
   <script defer src="js/script.js"></script>
   <!-- end scripts-->

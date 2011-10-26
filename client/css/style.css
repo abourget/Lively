@@ -216,6 +216,28 @@ td { vertical-align: top; }
 
 
 
+#dropbox {
+	width: 250px;
+	height: 75px;
+	border: 2px solid #DDD;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	background-color: #EEE;
+	text-align: center;
+	color: #333;
+	font-size: 2em;
+	font-family: Arial, sans-serif;
+}
+
+#droplabel {
+	position: relative;
+	top: 30%;
+}
+
+
+
+
+
 
 
 
