@@ -39,34 +39,33 @@
 
   <div id="container">
     <header>
+      <button class="enable_moderator" onclick="enable_moderator(); return false;">Moderator</button>
       <h1>YouPush my dear</h1>
     </header>
     
     
     <div id="main" role="main">
 	
-        <div class="titlebar">Live Feed</div>
+        <h2>Live Feed</h2>
         
         <div id="live_feed">
           <!-- Ici, on va avoir le LIVE FEED pour TOUT le monde, grand public compris -->
           
               <div class="item {{type}}">
                   <div class="content-wrapper">
-                      <div class="thumb"><img src="./img/thumb_examble.jpg"/></div>
-                      <div class="text">sdgsdgdsfg g dsfgdsf g dfg sd</div>
+                      <div class="text"><strong>11:23a.m.</strong>: Hey this is neat!</div>
                   </div>  
               </div>
             
                 <div class="item {{type}}">
                   <div class="content-wrapper">
-                      <div class="thumb"><img src="./img/thumb_examble.jpg"/></div>
-                      <div class="text">sdgsdgdsfg g dsfgdsf g dfg sd</div>
+                      <div class="text"><strong>12:23a.m.</strong>: Here we see the thing happening...</div>
                   </div>  
               </div>
                 
         </div>
       
-        <div class="titlebar">Publisher</div>
+        <h2>Publisher</h2>
             
         <div id="publisher">
         <!-- Ici on va avoir les contrôles pour ENVOYER des choses -->
@@ -84,19 +83,26 @@
             
                 
           <div id="live_trash">
+            <h2>Live trash coming in...</h2>
             <!-- Ici va arriver TOUT le stock de tout le monde -->
 
           </div>
           <div id="nuggets">
+            <h2>Good nuggets</h2>
             <!-- Ici on va avoir les choses qu'on a sélectionné dans le trash -->
           </div>
           <div id="templates">
             <!-- Ici on va avoir les templates, en phase 2, pour formatter l'output. -->
-
+            <div data-tplname="blockquote">
+              Blockquoted text
+            </div>
+            <div data-tplname="twocol">
+              A two columns layout
+            </div>
           </div>
           <div id="broadcast">
             <!-- Ici, on va juste dropper ce qu'on veut publier et ça PART en live -->
-
+            
           </div>
         </div>
     </div>
@@ -109,26 +115,48 @@
   <!-- Template snippets -->
   <script id="moderator_snippet" type="text/html">
     <div class="mod_snippet datanode">
-      <button onclick="keep_snippet(this); return false;">KEEP!</button>
-      <div class="snippet">
-        {{ data }}
+      <div class="item">
+        <button class="keep" onclick="keep_snippet(this); return false;">KEEP!</button>
+        <div class="content-wrapper">
+          <div class="text"><strong>{{ stamp }}</strong>: {{ data }}</div>
+        </div>  
       </div>
     </div>
   </script>
 
   <script id="nugget_snippet" type="text/html">
     <div class="nugget_snippet datanode">
-      <button onclick="publish_snippet(this); return false;">PUBLISH!</button>
-      <div class="snippet">
-        {{ data }}
+      <div class="item">
+      <button class="publish" onclick="publish_snippet(this); return false;">PUBLISH!</button>
+        <div class="content-wrapper">
+          <div class="text"><strong>{{ stamp }}</strong>: {{ data }}</div>
+        </div>  
       </div>
     </div>
   </script>
 
   <script id="livefeed_snippet" type="text/html">
-    <div class="snippet datanode">{{ data }}</div>
+    <div class="item datanode">
+      <div class="content-wrapper">
+        <div class="text"><strong>{{ stamp }}</strong>: {{ data }}</div>
+      </div>  
+    </div>
   </script>
 
+  <script id="snippet_blockquote" type="text/html">
+    <div class="snippet_blockquote">
+      <blockquote class="zone" data-type="text">Drop blockquote here</blockquote>
+    </div>
+  </script>
+
+  <script id="snippet_twocol" type="text/html">
+    <div class="snippet_twocol">
+      <table><tr>
+          <td class="zone" data-type="text">Drop text 1 here</td>
+          <td class="zone" data-type="text">Drop text 2 here</td>
+      </tr></table>
+    </div>
+  </script>
 
   <!-- JavaScript at the bottom for fast page loading -->
 
