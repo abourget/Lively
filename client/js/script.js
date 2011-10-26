@@ -37,9 +37,9 @@ jQuery(document).ready(function(){
     
     // Moderator events
     $("#moderatorBtn").toggle(function(){
-        $("#moderator").animate({bottom:0}, {queued:false});
+        $("#moderator").css('display', 'block');
     },function(){
-         $("#moderator").animate({bottom:-280}, {queued:false});
+        $("#moderator").css('display', 'none');
     });
           
 })
