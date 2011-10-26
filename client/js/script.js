@@ -5,6 +5,9 @@
 var dropbox;
 var livefeed, moderator, publisher;
 
+var template_loader = null;
+var push_data = null;
+
 jQuery(document).ready(function(){
     
     // Define socket connection
@@ -35,30 +38,66 @@ jQuery(document).ready(function(){
     $("#publisherText").keypress(sendPublisherText);
     
 
-    // Moderator events
-    $("#moderatorBtn").toggle(function(){
-        $("#moderator").css('display', 'block');
-    },function(){
-        $("#moderator").css('display', 'none');
-    });
-    
     // Moderator drag/drop events
     var tplsrcs = document.querySelectorAll('.tplsrc');
-    [].forEach.call(drags, function(tplsrc) {
+    [].forEach.call(tplsrcs, function(tplsrc) {
         tplsrc.addEventListener("dragend", tplsrcDrop, false);
     });
     
-    setModeratorDragDrop();      
+    var broadcast = $('#broadcast')[0];
+    broadcast.addEventListener('drop', function(e) {
+         if (e.stopPropagation) {
+             e.stopPropagation(); // Stops some browsers from redirecting.
+         }
+
+        console.log("DROPED", e);
+        /* HOW TO GET DATA THROUGH dataTransfer darn it ? */
+        
+        var tpl_name = template_loader;
+        template_lodaer = null;
+        if (tpl_name) {
+            console.log("LOaindg template");
+            $('#broadcast').html(ich['template_' + tpl_name]({}));
+            set_bindings_broadcaster();
+        }
+    }, false);
+    broadcast.addEventListener('dragover', noopHandler);
+    broadcast.addEventListener('dragenter', noopHandler);
+
+    // Add handlers for the templates tags
+    var tplItems = document.querySelectorAll('.tplsrc');
+    console.log("Tpl items", tplItems);
+    for (var i = 0; i < tplItems.length; i++) {
+        tplItems[i].addEventListener('dragstart', function (e) {
+            // store the ID of the element, and collect it on the drop later on
+            template_loader = $(this).data('tplname');
+            push_data = null;
+            return false;
+        });
+    }
+
 })
 
 
+function set_bindings_broadcaster() {
+    $('#broadcast .zone').each(function(el) {
+        var self = this;
+        this.addEventListener('drop', function(e) {
+            console.log("BETTER DROP on zone");
+            var data = push_data;
+            push_data = null;
+            var src = e.target;
+            if ($(src).data('type') == 'text') {
+                $(src).html(data.data);
+            }
+        });
+    });
+}
+
+
 // Appel cette fonction a chaque entrée de trucs draggable
-function setModeratorDragDrop() {   
-     
-     var nuggets = document.querySelectorAll('.nugget_snippet');
-     [].forEach.call(nuggets, function(nugget) {
-         nugget.addEventListener("dragend", nuggetDrop, false);
-     });     
+function setModeratorDragDrop(new_nugget) {   
+    //new_nugget[0].addEventListener("dragend", nuggetDrop, false);
 }
 
 // tplsrc
@@ -73,9 +112,14 @@ function tplsrcDrop(e) {
 function nuggetDrop(e) {
     var srcDiv = e.srcElement;
     var targetDiv = e.targetElement;
-    
+ 
+    console.log("Droped", srcDiv, targetDiv, arguments);
+    $(e.targetElement).html('boo');
     //FONCTION
 }
+
+
+
 
 function keep_snippet(moderator_el) {
     // When we add to the nuggets list
@@ -83,6 +127,15 @@ function keep_snippet(moderator_el) {
     var tpl = ich.nugget_snippet(data);
     $(tpl, '.datanode').data('data', data);
     var el = $('#nuggets').append(tpl);
+    attach_dragstart(tpl, data);
+}
+
+function attach_dragstart(tpl, data) {
+    tpl[0].addEventListener('dragstart', function(e) {
+        template_loader = null;
+        push_data = data;
+        return false;
+    });
 }
 
 function publish_snippet(nugget_el) {

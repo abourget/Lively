@@ -29,7 +29,7 @@ var redis = require('redis');
 var sio = require('socket.io');
 
 // Server global defaults.
-var host = 'localhost';
+var host = '0.0.0.0';
 var port = 8080;
 
 mime.define({
