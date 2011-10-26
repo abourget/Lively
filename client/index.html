@@ -41,28 +41,44 @@
     <header>
       <h1>YouPush my dear</h1>
     </header>
+    
+    
+    <div id="sidebar">
+        <div id="moderatorBtn">X</div>
+    </div>
+    
     <div id="main" role="main">
 	
-		<div id="dropbox"><span id="droplabel">Drop file here...</span></div>
-		<img id="preview" alt="[ preview will display here ]" />
-
-
+        <div class="titlebar">Live Feed</div>
+        
         <div id="live_feed">
           <!-- Ici, on va avoir le LIVE FEED pour TOUT le monde, grand public compris -->
           
-            <div class="item {{type}}">
-                <div class="content-wrapper">
-                    <div class="thumb"><img src="./img/thumb_examble.jpg"/></div>
-                    <div class="text">sdgsdgdsfg g dsfgdsf g dfg sd</div>
-                </div>  
-            </div>
+              <div class="item {{type}}">
+                  <div class="content-wrapper">
+                      <div class="thumb"><img src="./img/thumb_examble.jpg"/></div>
+                      <div class="text">sdgsdgdsfg g dsfgdsf g dfg sd</div>
+                  </div>  
+              </div>
+            
+                <div class="item {{type}}">
+                  <div class="content-wrapper">
+                      <div class="thumb"><img src="./img/thumb_examble.jpg"/></div>
+                      <div class="text">sdgsdgdsfg g dsfgdsf g dfg sd</div>
+                  </div>  
+              </div>
                 
         </div>
       
+        <div class="titlebar">Publisher</div>
+            
         <div id="publisher">
-          <!-- Ici on va avoir les contrôles pour ENVOYER des choses -->
+        <!-- Ici on va avoir les contrôles pour ENVOYER des choses -->
 
-          <input type="text" id="publisherText" />
+        <input type="text" id="publisherText" />
+      	<div id="dropbox"><span id="droplabel">Drop file here...</span></div>
+  		<img id="preview" alt="[ preview will display here ]" />
+
 
         </div>
         <div id="moderator">
@@ -119,6 +135,7 @@
   <script src="/js/libs/jquery-1.6.2.min.js"></script>
 
   <!-- scripts concatenated and minified via ant build script-->
+  <link href='http://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css'>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/mylibs/ICanHaz.min.js"></script>
   <script defer src="/js/plugins.js"></script>
