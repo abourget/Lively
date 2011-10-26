@@ -232,7 +232,7 @@ h1 {
 }
 
 #moderator {
-    background: black none repeat 0 0;
+/*    background: black none repeat 0 0;
 	width: 100%;
 	height: 300px;
 	display: inline-block;
@@ -244,6 +244,7 @@ h1 {
     color: #DDD;
     text-align: center;
     padding: 3px;
+*/
 }
 
 #moderatorBtn {
@@ -374,20 +375,20 @@ button.publish, button.keep {
 
 
 #live_trash {
-  display: none;
+  ddisplay: none;
   
 }
 
 #nuggets {
-  display: none;
+  didsplay: none;
 }
 
 #templates {
-  display: none;
+  disdplay: none;
 }
 
 #broadcast {
-  display: none;
+  dispdlay: none;
 }
 
 

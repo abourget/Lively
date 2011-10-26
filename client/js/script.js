@@ -16,7 +16,7 @@ jQuery(document).ready(function(){
         console.log("New item", data);
         var tpl = ich.livefeed_snippet(data);
         $(tpl, '.datanode').data('data', data);
-        var el = $('#live_feed').append(tpl);
+        var el = $('#live_feed').prepend(tpl);
     });
     moderator.on('new_trash', function(data) {
         console.log("New trash", data);
