@@ -14,9 +14,7 @@ jQuery(document).ready(function(){
     // Defnie socket events
     livefeed.on('new_item', function(data) {
         console.log("New item", data);
-        var tpl = ich.livefeed_snippet(data);
-        $(tpl, '.datanode').data('data', data);
-        var el = $('#live_feed').prepend(tpl);
+        var el = $('#live_feed').prepend($(data.html));
     });
     moderator.on('new_trash', function(data) {
         console.log("New trash", data);
@@ -35,13 +33,6 @@ jQuery(document).ready(function(){
     // Publisher events
     $("#publisherText").keypress(sendPublisherText);
     
-    // Moderator events
-    $("#moderatorBtn").toggle(function(){
-        $("#moderator").animate({bottom:0}, {queued:false});
-    },function(){
-         $("#moderator").animate({bottom:-280}, {queued:false});
-    });
-          
 })
 
 function keep_snippet(moderator_el) {
@@ -54,13 +45,17 @@ function keep_snippet(moderator_el) {
 
 function publish_snippet(nugget_el) {
     // When we want to publish to the LIVE FEED
-    var data = $(nugget_el).parents('.datanode').data('data');
-    console.log('hello');
-    console.log(data);
-    moderator.emit('broadcast', data);
+    var rootnode = $(nugget_el).parents('.datanode');
+    var html = rootnode.html();
+    //var data = .data('data');
+    //console.log('hello');
+    console.log("Sending HTML", html);
+    moderator.emit('broadcast', html);
 }
 
-
+function enable_moderator() {
+    $('#moderator').show();
+}
 
     
 function sendPublisherText(e) {
@@ -68,6 +63,7 @@ function sendPublisherText(e) {
         var val = $("#publisherText").val();
         publisher.json.emit('publish', {type: "text", data: val});
         console.log("emitting", val);
+        $('#publisherText').val('');
     }
 };
 

@@ -59,8 +59,7 @@ function Server() {
         // When we receive messages, treat them this way:
         pub_queue.on('message', function(channel, msg) {
             // We've received a message, push to user
-            var now = new Date();
-            socket.json.emit("new_item", {type: "element", data: msg, stamp: now.toDateString()});
+            socket.json.emit("new_item", {type: "html", html: msg});
         });
         // Register to the REDIS queue 'public'
         pub_queue.subscribe('public');
@@ -90,10 +89,10 @@ function Server() {
         // keep the pub_queue open
         var pub_queue = redis.createClient();
 
-        socket.on('broadcast', function(data) {
+        socket.on('broadcast', function(html) {
             // Send something to the 'public' queue
-            console.log("data", data);
-            pub_queue.publish('public', data.data);
+            console.log("html data", html);
+            pub_queue.publish('public', html);
         });
 
         socket.on('disconnect', function() {
