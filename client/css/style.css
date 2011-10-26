@@ -247,8 +247,6 @@ h1 {
 }
 
 #moderatorBtn {
-	font-size: 20px;
-	cursor: pointer;
 }
 
 .enable_moderator {
@@ -269,6 +267,7 @@ h2 {
 }
 
 #dropbox {
+	position: relative;
 	width: 250px;
 	height: 75px;
 	border: 2px solid #DDD;
@@ -279,13 +278,13 @@ h2 {
 	color: #333;
 	font-size: 2em;
 	font-family: Arial, sans-serif;
+	top: -5px;
 }
-
 
 
 #droplabel {
 	position: relative;
-	top: 30%;
+	top: 20%;
 }
 
 
