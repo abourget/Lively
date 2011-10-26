@@ -1,0 +1,8 @@
+Dependencies
+------------
+
+npm install socket.io
+npm install redis
+npm install mime
+
+
