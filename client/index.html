@@ -80,7 +80,6 @@
         <div class="titlebar">Moderator</div>
         
         <div id="moderator">
-            
                 
           <div id="live_trash">
             <h2>Live trash coming in...</h2>
@@ -111,6 +110,11 @@
     </footer>
   </div> <!--! end of #container -->
 
+
+    <div class="template template_blockquote"  draggable="true">
+      <blockquote class="zone" data-type="text">Drop blockquote here</blockquote>
+    </div>
+    
 
   <!-- Template snippets -->
   <script id="moderator_snippet" type="text/html">
@@ -143,14 +147,14 @@
     </div>
   </script>
 
-  <script id="snippet_blockquote" type="text/html">
-    <div class="snippet_blockquote">
+  <script id="template_blockquote" type="text/html">
+    <div class="template template_blockquote">
       <blockquote class="zone" data-type="text">Drop blockquote here</blockquote>
     </div>
   </script>
 
-  <script id="snippet_twocol" type="text/html">
-    <div class="snippet_twocol">
+  <script id="template_twocol" type="text/html">
+    <div class="template template_twocol">
       <table><tr>
           <td class="zone" data-type="text">Drop text 1 here</td>
           <td class="zone" data-type="text">Drop text 2 here</td>
@@ -168,6 +172,7 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/mylibs/ICanHaz.min.js"></script>
   <script defer src="/js/plugins.js"></script>
+  <script defer src="/js/mylibs/jquery.event.drag-2.0.min.js"></script>
   <script defer src="/js/script.js"></script>
   <!-- end scripts-->
 

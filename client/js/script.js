@@ -6,6 +6,7 @@ var dropbox;
 var livefeed, moderator, publisher;
 
 jQuery(document).ready(function(){
+    
     // Define socket connection
     livefeed = io.connect('/livefeed');
     moderator = io.connect('/moderator');
@@ -41,8 +42,41 @@ jQuery(document).ready(function(){
     },function(){
         $("#moderator").css('display', 'none');
     });
-          
+    
+    // Moderator drag/drop events
+    var tplsrcs = document.querySelectorAll('.tplsrc');
+    [].forEach.call(drags, function(tplsrc) {
+        tplsrc.addEventListener("dragend", tplsrcDrop, false);
+    });
+    
+    setModeratorDragDrop();      
 })
+
+
+// Appel cette fonction a chaque entrée de trucs draggable
+function setModeratorDragDrop() {   
+     
+     var nuggets = document.querySelectorAll('.nugget_snippet');
+     [].forEach.call(nuggets, function(nugget) {
+         nugget.addEventListener("dragend", nuggetDrop, false);
+     });     
+}
+
+// tplsrc
+function tplsrcDrop(e) {
+    var srcDiv = e.srcElement;
+    var targetDiv = e.targetElement;
+    
+    //FONCTION
+}
+
+// nugget drop 
+function nuggetDrop(e) {
+    var srcDiv = e.srcElement;
+    var targetDiv = e.targetElement;
+    
+    //FONCTION
+}
 
 function keep_snippet(moderator_el) {
     // When we add to the nuggets list
