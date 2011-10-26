@@ -218,8 +218,9 @@ header {
 }
 
 body {
-	font-family: 'Quicksand', sans-serif;
+	font-family: 'Open Sans', sans-serif;
     background: white url('/img/bg.jpg') repeat 0 0;
+    font-size: 16px;
 }
 
 h1 {
@@ -286,7 +287,8 @@ h2 {
 }
 
 
-.item {
+.item, 
+.template {
     background-image: -webkit-gradient(
     	linear,
     	left bottom,
@@ -303,28 +305,17 @@ h2 {
     position: relative;
 }
 
-.item .content-wrapper {    
+.item .content-wrapper,
+.template .content-wrapper {    
     display: inline-block;
     margin:5px;
 }
 
-.item .text {
+.item .text,
+.template .text {
     display: inline-block;
     float: left;
     margin: 10px 2px;
-}
-
-.item .thumb {
-    display: inline-block;
-    float: left;
-
-    width:80px;
-    height:80px;
-    
-    border: 1px #CCC solid;
-    border-radius: 15px;
-    
-    overflow:hidden;
 }
 
 /* publisher */
@@ -380,14 +371,30 @@ button.publish, button.keep {
 }
 
 
+/* templates */
 
+.template_blockquote {
+    font-size: 20px;
+    color: #777;
+    position: relative;
+}
 
+.template_blockquote .quote1,
+.template_blockquote .quote2 {
+	font-family: 'Arial', arial;
+    font-size: 150px;
+    color: #CCC;
+    position: absolute;
+    top: -20px;
+    left: 0px;
+    display: block;
+}
 
-
-
-
-
-
+.template_blockquote .quote2 {
+    top: -20px;
+    right: 20px;
+    left: auto;
+}
 
 
 

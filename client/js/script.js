@@ -33,7 +33,6 @@ jQuery(document).ready(function(){
     
     // Publisher events
     $("#publisherText").keypress(sendPublisherText);
-    
 
     // Moderator events
     $("#moderatorBtn").toggle(function(){
@@ -44,7 +43,7 @@ jQuery(document).ready(function(){
     
     // Moderator drag/drop events
     var tplsrcs = document.querySelectorAll('.tplsrc');
-    [].forEach.call(drags, function(tplsrc) {
+    [].forEach.call(tplsrcs, function(tplsrc) {
         tplsrc.addEventListener("dragend", tplsrcDrop, false);
     });
     
@@ -66,6 +65,8 @@ function tplsrcDrop(e) {
     var srcDiv = e.srcElement;
     var targetDiv = e.targetElement;
     
+    console.log(targetDiv);
+    
     //FONCTION
 }
 
@@ -75,6 +76,7 @@ function nuggetDrop(e) {
     var targetDiv = e.targetElement;
     
     //FONCTION
+    console.log(targetDiv);
 }
 
 function keep_snippet(moderator_el) {
