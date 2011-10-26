@@ -55,47 +55,68 @@ function Server() {
         console.log("LIVE FEED user logged in");
 
         // Redis client...
-        pub_queue = redis.createClient();
+        var pub_queue = redis.createClient();
         // When we receive messages, treat them this way:
-        pub_queue.on('subscribe', function(channel, msg) {
-            // Push to the user
+        pub_queue.on('message', function(channel, msg) {
+            // We've received a message, push to user
             socket.json.emit("new_item", {type: "element", data: msg});
         });
         // Register to the REDIS queue 'public'
         pub_queue.subscribe('public');
 
         socket.on('disconnect', function() {
-            console.log("SOCKET DISCONNECTED");
+            console.log("livefeed disconnected");
+            pub_queue.unsubscribe();
+            pub_queue.quit();
         });
     });
     var moderator = io.of('/moderator').on('connection', function(socket) {
         // Functions called by the moderators
         console.log("Moderator logged in");
         // Redis client...
-        int_queue = redis.createClient();
+        var int_queue = redis.createClient();
+
         // When we receive messages, treat them this way:
-        int_queue.on('subscribe', function(channel, msg) {
+        int_queue.on('message', function(channel, msg) {
             // Send to the admin's browser
-            socket.json.emit({type: "msg", data: msg});
+            console.log("We've received something from the INTERNAL queue");
+            socket.json.emit("new_trash", {type: "msg", data: msg});
         });
         // Register to the REDIS queue 'public'
         int_queue.subscribe('internal');
 
+        // keep the pub_queue open
+        var pub_queue = redis.createClient();
+
         socket.on('broadcast', function(data) {
             // Send something to the 'public' queue
-            pub_queue = redis.createClient();
+            console.log("data", data);
             pub_queue.publish('public', data.data);
+        });
+
+        socket.on('disconnect', function() {
+            console.log("moderator disconnected");
+            int_queue.unsubscribe();
+            int_queue.quit();
+            pub_queue.quit();
+            // disconnet pub_queue ?
         });
     });
 
     var publisher = io.of('/publisher').on('connection', function(socket) {
         // Functions called by the publishers
         console.log("Publisher logged in");
+        var int_queue = redis.createClient();
 
         socket.on('publish', function(data) {
+            console.log("WE'VE RECEIVED SOMETHING FROM THE PUBLISHER", data);
             // Send something to the ADMIN queues
-            int_queue = redis.createClient();
             int_queue.publish('internal', data.data);
+        });
+
+        socket.on('disconnect', function() {
+            console.log("publisher disconnected");
+            int_queue.quit();
         });
     });
 

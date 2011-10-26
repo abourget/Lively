@@ -14,9 +14,15 @@ jQuery(document).ready(function(){
     // Defnie socket events
     livefeed.on('new_item', function(data) {
         console.log("New item", data);
+        var tpl = ich.livefeed_snippet(data);
+        $(tpl, '.datanode').data('data', data);
+        var el = $('#live_feed').append(tpl);
     });
     moderator.on('new_trash', function(data) {
         console.log("New trash", data);
+        var tpl = ich.moderator_snippet(data);
+        $(tpl, '.datanode').data('data', data);
+        var el = $('#live_trash').append(tpl);
     });
 	
     // Init event handlers
@@ -30,6 +36,22 @@ jQuery(document).ready(function(){
     $("#publisherText").keypress(sendPublisherText);
           
 })
+
+function keep_snippet(moderator_el) {
+    // When we add to the nuggets list
+    var data = $(moderator_el).parents('.datanode').data('data');
+    var tpl = ich.nugget_snippet(data);
+    $(tpl, '.datanode').data('data', data);
+    var el = $('#nuggets').append(tpl);
+}
+
+function publish_snippet(nugget_el) {
+    // When we want to publish to the LIVE FEED
+    var data = $(nugget_el).parents('.datanode').data('data');
+    console.log('hello');
+    console.log(data);
+    moderator.emit('broadcast', data);
+}
 
     
 function sendPublisherText(e) {

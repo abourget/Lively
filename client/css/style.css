@@ -244,29 +244,33 @@ td { vertical-align: top; }
 }
 
 #publisher {
-  display: none;
+  displouay: none;
 }
 
 #moderator {
-  display: none;
+  displouay: none;
 }
 
 #live_trash {
-  display: none;
+  displouay: none;
 }
 
 #nuggets {
-  display: none;
+  displouay: none;
 }
 
 #templates {
-  display: none;
+  displouay: none;
 }
 
 #broadcast {
-  display: none;
+  displouay: none;
 }
 
+.datanode {
+  padding: 5px;
+  border: 1px solid #eee;
+}
 
 
 

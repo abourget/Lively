@@ -81,16 +81,40 @@
   </div> <!--! end of #container -->
 
 
+  <!-- Template snippets -->
+  <script id="moderator_snippet" type="text/html">
+    <div class="mod_snippet datanode">
+      <button onclick="keep_snippet(this); return false;">KEEP!</button>
+      <div class="snippet">
+        {{ data }}
+      </div>
+    </div>
+  </script>
+
+  <script id="nugget_snippet" type="text/html">
+    <div class="nugget_snippet datanode">
+      <button onclick="publish_snippet(this); return false;">PUBLISH!</button>
+      <div class="snippet">
+        {{ data }}
+      </div>
+    </div>
+  </script>
+
+  <script id="livefeed_snippet" type="text/html">
+    <div class="snippet datanode">{{ data }}</div>
+  </script>
+
+
   <!-- JavaScript at the bottom for fast page loading -->
 
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-  <script src="js/libs/jquery-1.6.2.min.js"></script>
-
+  <script src="/js/libs/jquery-1.6.2.min.js"></script>
 
   <!-- scripts concatenated and minified via ant build script-->
   <script src="/socket.io/socket.io.js"></script>
-  <script defer src="js/plugins.js"></script>
-  <script defer src="js/script.js"></script>
+  <script src="/js/mylibs/ICanHaz.min.js"></script>
+  <script defer src="/js/plugins.js"></script>
+  <script defer src="/js/script.js"></script>
   <!-- end scripts-->
 
 	
