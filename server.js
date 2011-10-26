@@ -59,7 +59,8 @@ function Server() {
         // When we receive messages, treat them this way:
         pub_queue.on('message', function(channel, msg) {
             // We've received a message, push to user
-            socket.json.emit("new_item", {type: "element", data: msg});
+            var now = new Date();
+            socket.json.emit("new_item", {type: "element", data: msg, stamp: now.toDateString()});
         });
         // Register to the REDIS queue 'public'
         pub_queue.subscribe('public');
@@ -80,7 +81,8 @@ function Server() {
         int_queue.on('message', function(channel, msg) {
             // Send to the admin's browser
             console.log("We've received something from the INTERNAL queue");
-            socket.json.emit("new_trash", {type: "msg", data: msg});
+            var now = new Date();
+            socket.json.emit("new_trash", {type: "msg", data: msg, stamp: now.toDateString()});
         });
         // Register to the REDIS queue 'public'
         int_queue.subscribe('internal');

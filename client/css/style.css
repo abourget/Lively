@@ -237,7 +237,7 @@ h1 {
     left: 0;
 }
 
-.titlebar {
+h2 {
     color:#666;
     border-bottom: 1px solid #999;
     line-height:13px;
@@ -272,7 +272,7 @@ h1 {
 }
 
 
-#live_feed .item {
+.item {
     background-image: -webkit-gradient(
     	linear,
     	left bottom,
@@ -286,21 +286,21 @@ h1 {
     border-bottom: 1px #CCC solid;
     margin: 0px;
     display: inline-block;    
+    position: relative;
 }
 
-#live_feed .item .content-wrapper {
-    
+.item .content-wrapper {    
     display: inline-block;
     margin:5px;
 }
 
-#live_feed .item .text {
+.item .text {
     display: inline-block;
     float: left;
     margin: 10px 2px;
 }
 
-#live_feed .item .thumb {
+.item .thumb {
     display: inline-block;
     float: left;
 
@@ -320,9 +320,16 @@ h1 {
 #moderator {
   displouay: none;
 }
+button.publish, button.keep {
+  position: absolute;
+  top: 5px;
+  right: 5px;  
+}
+
 
 #live_trash {
   displouay: none;
+  
 }
 
 #nuggets {
