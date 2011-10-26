@@ -91,11 +91,16 @@
           </div>
           <div id="templates">
             <!-- Ici on va avoir les templates, en phase 2, pour formatter l'output. -->
-
+            <div data-tplname="blockquote">
+              Blockquoted text
+            </div>
+            <div data-tplname="twocol">
+              A two columns layout
+            </div>
           </div>
           <div id="broadcast">
             <!-- Ici, on va juste dropper ce qu'on veut publier et ça PART en live -->
-
+            
           </div>
         </div>
     </div>
@@ -128,6 +133,20 @@
     <div class="snippet datanode">{{ data }}</div>
   </script>
 
+  <script id="snippet_blockquote" type="text/html">
+    <div class="snippet_blockquote">
+      <blockquote class="zone" data-type="text">Drop blockquote here</blockquote>
+    </div>
+  </script>
+
+  <script id="snippet_twocol" type="text/html">
+    <div class="snippet_twocol">
+      <table><tr>
+          <td class="zone" data-type="text">Drop text 1 here</td>
+          <td class="zone" data-type="text">Drop text 2 here</td>
+      </tr></table>
+    </div>
+  </script>
 
   <!-- JavaScript at the bottom for fast page loading -->
 
