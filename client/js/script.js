@@ -34,6 +34,13 @@ jQuery(document).ready(function(){
     
     // Publisher events
     $("#publisherText").keypress(sendPublisherText);
+    
+    // Moderator events
+    $("#moderatorBtn").toggle(function(){
+        $("#moderator").animate({bottom:0}, {queued:false});
+    },function(){
+         $("#moderator").animate({bottom:-280}, {queued:false});
+    });
           
 })
 

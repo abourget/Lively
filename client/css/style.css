@@ -243,8 +243,6 @@ h1 {
 }
 
 #moderatorBtn {
-	font-size: 20px;
-	cursor: pointer;
 }
 
 .titlebar {
@@ -259,6 +257,7 @@ h1 {
 }
 
 #dropbox {
+	position: relative;
 	width: 250px;
 	height: 75px;
 	border: 2px solid #DDD;
@@ -269,13 +268,13 @@ h1 {
 	color: #333;
 	font-size: 2em;
 	font-family: Arial, sans-serif;
+	top: -5px;
 }
-
 
 
 #droplabel {
 	position: relative;
-	top: 30%;
+	top: 20%;
 }
 
 
