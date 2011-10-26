@@ -39,7 +39,10 @@
 
   <div id="container">
     <header>
-      <button class="enable_moderator" onclick="enable_moderator(); return false;">Moderator</button>
+      <div class="enable_actions">
+        <button class="enable_publisher button medium blue" onclick="enable_publisher(); return false;">Publish stuff</button>
+        <button class="enable_moderator button medium rosy" onclick="enable_moderator(); return false;">Moderator</button>
+      </div>
       <h1>YouPush my dear</h1>
     </header>
     
@@ -65,22 +68,23 @@
                 
         </div>
       
-        <h2>Publisher</h2>
-            
         <div id="publisher">
         <!-- Ici on va avoir les contrôles pour ENVOYER des choses -->
+          <h2>Publisher</h2>
+            
 
-        <div class="content-wrapper">
+          <div class="content-wrapper">
             <input type="text" id="publisherText" />
       	    <div id="dropbox"><span id="droplabel">Drop file here...</span></div>
-        </div>
+          </div>
 
+          <div id="sent_message"></div>
         </div>
         
-        <div class="titlebar">Moderator</div>
         
         <div id="moderator">
-            
+
+          <h1 style="text-align: center;">Moderator panel</h1>  
                 
           <div id="live_trash">
             <h2>Live trash coming in...</h2>
@@ -95,14 +99,17 @@
             <!-- Ici on va avoir les templates, en phase 2, pour formatter l'output. -->
             <h3>Drag your templates from here:</h3>
             <ul>
-              <li><div data-tplname="blockquote">Blockquoted text</div></li>
-              <li><div data-tplname="twocol">A two columns layout</div></li>
+              <li><div class="tplsrc" data-tplname="blockquote">Blockquoted text</div></li>
+              <li><div class="tplsrc" data-tplname="twocol">A two columns layout</div></li>
             </ul>
           </div>
           <div id="broadcast">
             <!-- Ici, on va juste dropper ce qu'on veut publier et ça PART en live -->
             Drop your template here.
           </div>
+          <div id="publish_button">
+            <button onclick="publish_chunk(); return false;" class="button humonguous orange">PUBLISH!</button>
+          </div
         </div>
     </div>
     <footer>
@@ -115,7 +122,7 @@
   <script id="moderator_snippet" type="text/html">
     <div class="mod_snippet datanode">
       <div class="item">
-        <button class="keep" onclick="keep_snippet(this); return false;">KEEP!</button>
+        <button class="keep button small green" onclick="keep_snippet(this); return false;">KEEP!</button>
         <div class="content-wrapper">
           <div class="text"><strong>{{ stamp }}</strong>: {{ data }}</div>
         </div>  

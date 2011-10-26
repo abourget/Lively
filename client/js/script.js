@@ -44,6 +44,7 @@ function keep_snippet(moderator_el) {
 }
 
 function publish_snippet(nugget_el) {
+    /* DEPRECATED, we don't publish snippets anymore */
     // When we want to publish to the LIVE FEED
     var rootnode = $(nugget_el).parents('.datanode');
     var html = rootnode.html();
@@ -53,8 +54,18 @@ function publish_snippet(nugget_el) {
     moderator.emit('broadcast', html);
 }
 
+function publish_chunk() {
+    /*  Main PUBLISHING function.. take the staging broadcast area and SENDS it over */
+    var html = $('#broadcast').html();
+    console.log("Sending HTML", html);
+    moderator.emit('broadcast', html);
+}
+
 function enable_moderator() {
     $('#moderator').show();
+}
+function enable_publisher() {
+    $('#publisher').show();
 }
 
     
@@ -64,8 +75,11 @@ function sendPublisherText(e) {
         publisher.json.emit('publish', {type: "text", data: val});
         console.log("emitting", val);
         $('#publisherText').val('');
+        $('#sent_message').html("Sending message: " + val);
     }
 };
+
+
 
 
 function noopHandler(evt) {
