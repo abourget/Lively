@@ -28,13 +28,6 @@
 
   <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
 
-	<script>
-	  var socket = io.connect('http://localhost');
-	  socket.on('news', function (data) {
-	    console.log(data);
-	    socket.emit('my other event', { my: 'data' });
-	  });
-	</script>
 
   <!-- All JavaScript at the bottom, except for Modernizr / Respond.
        Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
@@ -89,12 +82,12 @@
   <!-- JavaScript at the bottom for fast page loading -->
 
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
 
 
   <!-- scripts concatenated and minified via ant build script-->
-  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/mylibs/socket.io.js"></script>
   <script defer src="js/plugins.js"></script>
   <script defer src="js/script.js"></script>
   <!-- end scripts-->
