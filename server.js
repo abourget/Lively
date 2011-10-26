@@ -23,6 +23,7 @@ var fs = require('fs');
 var url = require('url');
 var mime = require('mime');
 var sys = require('sys');
+var redis = require('redis');
 
 //var formidable = require('formidable');
 var sio = require('socket.io');
@@ -50,43 +51,51 @@ function Server() {
     // Global state.
     var users = {};
 
-    var chat = io.of('/youpush').on('connection', function(socket) {
-        socket.json.emit("bob", {hello: "bob"});
+    var livefeed = io.of('/livefeed').on('connection', function(socket) {
+        console.log("LIVE FEED user logged in");
 
-
-        // socket.on('setnickname', function(data) {
-
-        //     socket.set('profileid', data.id, function() {
-        //         users[data.id] = data;
-
-        //         chat.json.emit('newuser', {
-        //             senderID: socket.id,
-        //             displayName: data.displayName,
-        //             profileId: data.id,
-        //             users: users
-        //         }); // broadcast
-        //         //socket.json.emit('newuser', {nickname: nickname, users: users});
-        //     });
-        // });
-
-        // socket.on('chat', function(data) {
-        //     socket.get('profileid', function(err, profileId) {
-
-        //         chat.json.emit('chat', {
-        //             senderID: socket.id,
-        //             msg: data.msg, 
-        //             displayName: users[profileId].displayName, // TODO(ericbidelman): Use data.displayName instead from client?
-        //             profileId: profileId
-        //         });
-
-        //     });
-        // });
-
-        socket.on('changeAvatar', function(data){      
-            console.log("Changin avatar please :)");
+        // Redis client...
+        pub_queue = redis.createClient();
+        // When we receive messages, treat them this way:
+        pub_queue.on('subscribe', function(channel, msg) {
+            // Push to the user
+            socket.json.emit("new_item", {type: "element", data: msg});
         });
+        // Register to the REDIS queue 'public'
+        pub_queue.subscribe('public');
+
         socket.on('disconnect', function() {
             console.log("SOCKET DISCONNECTED");
+        });
+    });
+    var moderator = io.of('/moderator').on('connection', function(socket) {
+        // Functions called by the moderators
+        console.log("Moderator logged in");
+        // Redis client...
+        int_queue = redis.createClient();
+        // When we receive messages, treat them this way:
+        int_queue.on('subscribe', function(channel, msg) {
+            // Send to the admin's browser
+            socket.json.emit({type: "msg", data: msg});
+        });
+        // Register to the REDIS queue 'public'
+        int_queue.subscribe('internal');
+
+        socket.on('broadcast', function(data) {
+            // Send something to the 'public' queue
+            pub_queue = redis.createClient();
+            pub_queue.publish('public', data.data);
+        });
+    });
+
+    var publisher = io.of('/publisher').on('connection', function(socket) {
+        // Functions called by the publishers
+        console.log("Publisher logged in");
+
+        socket.on('publish', function(data) {
+            // Send something to the ADMIN queues
+            int_queue = redis.createClient();
+            int_queue.publish('internal', data.data);
         });
     });
 
