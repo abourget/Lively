@@ -16,6 +16,10 @@ Random quotes:
 
  It was hacked in 6 hours at the HTML5 Hackathon in Montreal, on October 26th 2011.  Since then, we might have added a couple of things but we got something fully functional with text inputs on that day, including templates and drag'n'drop for layout and publishing, the live trash and the nuggets panels.
 
+TODO: implement the image UPLOAD (taken from the crhack server)
+TODO: implement the SERVER-SIDE saving of the feed, and re-showing upon next page load.. (so that we can continue the flow)
+TODO: implement comments, that are different from the PUBLISH stuff.. and can be sent by anyone (when activated by the moderator ?)
+
  Demoed:
   nodejs
    - some code based on crhack (DJBreakpoint ?)
