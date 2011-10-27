@@ -144,8 +144,8 @@
   <script id="snippet_img_src" type="text/html">
     <div class="item">
       <div class="content-wrapper">
-        <img src="{{ img_src }}" alt="[img]" />
-        <span>{{ img_src }}</span>
+        <img src="{{ src }}" alt="[img]" />
+        <span>{{ src }}</span>
       </div>  
     </div>
   </script>
@@ -173,7 +173,7 @@
   <script id="template_image_text" type="text/html">
     <div class="template template_image_text">
       <table><tr>
-          <td class="zone image" data-type="img" data-bind="text_to_html"><img src="/img/sample-4.jpg" alt="Image here" title="Image here" /></td>
+          <td class="zone image" data-type="img" data-bind="img_src_to_img"><img src="/img/sample-4.jpg" alt="Image here" title="Image here" /></td>
           <td class="zone text" data-type="text" data-bind="text_to_html" contenteditable="true">Drop text here.</td>
       </tr></table>
     </div>

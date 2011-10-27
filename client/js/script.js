@@ -235,6 +235,12 @@ var binding_functions = {
         if ($(zone).data('type') == 'text') {
             $(zone).val(data.data);
         }
+    },
+    img_src_to_img: function(zone, data) {
+        console.log("img_src_to_img");
+        if ($(zone).data('type') == 'img' && data.type == 'img_src') {
+            $('img', zone).attr('src', data.src);
+        }
     }
 };
 
