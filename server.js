@@ -75,24 +75,35 @@ function Server() {
         console.log("Moderator logged in");
         // Redis client...
         var int_queue = redis.createClient();
+        // keep the publication queue open
+        var pub_queue = redis.createClient();
 
         // When we receive messages, treat them this way:
         int_queue.on('message', function(channel, msg) {
             // Send to the admin's browser
-            console.log("We've received something from the INTERNAL queue");
-            var now = new Date();
-            socket.json.emit("new_trash", {type: "msg", data: msg, stamp: now.toDateString()});
+            console.log("We've received something from the INTERNAL queue", msg);
+            if (channel == 'new_trash') {
+                var now = new Date();
+                socket.json.emit("new_trash", {type: "msg", data: msg, stamp: now.toDateString()});
+            } else if (channel == 'new_nugget') {
+                // Message received AS-IS from the client
+                socket.json.emit("new_nugget", JSON.parse(msg));
+            }
         });
         // Register to the REDIS queue 'public'
-        int_queue.subscribe('internal');
-
-        // keep the pub_queue open
-        var pub_queue = redis.createClient();
+        int_queue.subscribe('new_trash');
+        int_queue.subscribe('new_nugget');
 
         socket.on('broadcast', function(html) {
             // Send something to the 'public' queue
             console.log("html data", html);
             pub_queue.publish('public', html);
+        });
+
+        socket.on('new_nugget', function(data) {
+            console.log("new nugget", data);
+            // Just stack anything AS IS
+            pub_queue.publish('new_nugget', JSON.stringify(data));
         });
 
         socket.on('disconnect', function() {
@@ -112,7 +123,7 @@ function Server() {
         socket.on('publish', function(data) {
             console.log("WE'VE RECEIVED SOMETHING FROM THE PUBLISHER", data);
             // Send something to the ADMIN queues
-            int_queue.publish('internal', data.data);
+            int_queue.publish('new_trash', data.data);
         });
 
         socket.on('disconnect', function() {

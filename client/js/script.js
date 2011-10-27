@@ -34,13 +34,11 @@ Random quotes:
 var dropbox;
 var livefeed, moderator, publisher;
 
-var template_loader = null;
-var push_data = null;
 
 jQuery(document).ready(function(){
     
     // Define socket connection
-    livefeed = io.connect('/livefeed', {'transports': ['xhr-polling']});
+    livefeed = io.connect('/livefeed'); //, {'transports': ['xhr-polling']});
     // TODO: put this in enable_moderator()
     moderator = io.connect('/moderator');
     // TODO: put this in enable publisher()
@@ -65,6 +63,13 @@ jQuery(document).ready(function(){
         var tpl = ich.moderator_snippet(data);
         $(tpl, '.datanode').data('data', data);
         var el = $('#live_trash').append(tpl);
+    });
+    moderator.on('new_nugget', function(data) {
+        console.log("New nugget", data);
+        var tpl = ich.nugget_snippet(data);
+        $(tpl, '.datanode').data('data', data);
+        var el = $('#nuggets').append(tpl);
+        attach_nugget_dnd(tpl[0], data);
     });
 	
     // TODO; see http://html5demos.com/js/h5utils.js  for addEvent polyfill
@@ -213,12 +218,10 @@ function set_bindings_broadcaster() {
 function keep_snippet(moderator_el) {
     // When we add to the nuggets list
     var data = $(moderator_el).parents('.datanode').data('data');
-    var tpl = ich.nugget_snippet(data);
-    $(tpl, '.datanode').data('data', data);
-    var el = $('#nuggets').append(tpl);
-    attach_nugget_dnd(tpl[0], data);
+    // Send to the queue, for others to see also.
+    moderator.json.emit('new_nugget', data);
 }
-
+ 
 function attach_nugget_dnd(el, data) {
     // DND support for new nuggets (live trash that we want to keep :)
     el.addEventListener('dragstart', function(e) {
@@ -231,6 +234,9 @@ function attach_nugget_dnd(el, data) {
 function publish_chunk() {
     //  Main PUBLISHING function..
     //  takes the staging #broadcast area and SENDS it over to livefeed
+    
+    // TODO: clean from "draggable", "contenteditable" attributes
+    // TODO: remove nodes that aren't appropriate
     var html = $('#broadcast').html();
     console.log("Sending HTML", html);
     moderator.emit('broadcast', html);

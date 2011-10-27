@@ -107,12 +107,12 @@
             Drop your template here.
           </div>
           <div id="publish_button">
-            <button onclick="publish_chunk(); return false;" class="button humonguous orange">PUBLISH!</button>
+            <button onclick="publish_chunk(); return false;" class="button humonguous orange" accesskey="s">PUBLISH!</button>
           </div
         </div>
     </div>
     <footer>
-
+      Keyboard shortcuts: <b>Alt+P</b> to go to Publish mode | <b>Alt+M</b> to go to moderator mode | <b>Alt+S</b> to publish the staged content
     </footer>
   </div> <!--! end of #container -->
     
@@ -148,7 +148,7 @@
 
   <script id="template_blockquote" type="text/html">
     <div class="template template_blockquote">
-      <blockquote class="zone" data-type="text">Drop blockquote here</blockquote>
+      <blockquote class="zone" data-type="text" contenteditable="true">Drop blockquote here</blockquote>
       <div class="quote1">‘</div>
       <div class="quote2">’</div>
     </div>
@@ -157,8 +157,8 @@
   <script id="template_twocol" type="text/html">
     <div class="template template_twocol">
       <table><tr>
-          <td class="zone td1" data-type="text">Drop text 1 here</td>
-          <td class="zone td2" data-type="text">Drop text 2 here</td>
+          <td class="zone td1" data-type="text" contenteditable="true">Drop text 1 here</td>
+          <td class="zone td2" data-type="text" contenteditable="true">Drop text 2 here</td>
       </tr></table>
     </div>
   </script>

@@ -224,6 +224,13 @@ header {
   position: relative;
 }
 
+footer {
+  text-align: center;
+  font-size: small;
+  color: #888;
+  padding: 25px 10px 25px;
+}
+
 body {
     font-family: 'Open Sans', sans-serif;
     background: white url('/img/bg.jpg') repeat 0 0;
