@@ -387,7 +387,7 @@ button.publish, button.keep {
 
 
 #broadcast {
-  height: 150px;
+  min-height: 150px;
   border: 4px black dotted;
   padding: 10px;
   margin: 10px;
@@ -416,10 +416,9 @@ button.publish, button.keep {
     color: #777;
     position: relative;
 }
-
 .template_blockquote .quote1,
 .template_blockquote .quote2 {
-        font-family: 'Arial', arial;
+    font-family: 'Arial', arial;
     font-size: 150px;
     color: #CCC;
     position: absolute;
@@ -427,19 +426,22 @@ button.publish, button.keep {
     left: 0px;
     display: block;
 }
-
 .template_blockquote .quote2 {
     top: -20px;
     right: 20px;
     left: auto;
 }
-
+.template_blockquote .stamp {
+    font-size: 60%;
+    text-align: right;
+    padding-left: 1em;
+    padding-bottom: 1em;
+}
 
 .template_twocol table {
     margin: 20px;
     width: 100%;
 }
-
 .template_twocol table .td1,
 .template_twocol table .td2 {
     width: 42%;
@@ -447,10 +449,23 @@ button.publish, button.keep {
     border-right: 1px solid #CCC;
     padding: 2%;
 }
-
 .template_twocol table .td2 {
     text-align: left;
+}
 
+
+.template_image_text {}
+.template_image_text .image {
+  width: 30%;
+  padding: 7px;
+}
+.template_image_text .image img {
+  max-width: 100%;
+  border: 5px solid #e8e8e8;
+}
+.template_image_text .text {
+  width: 70%;
+  padding-left: 15px;
 }
 
 

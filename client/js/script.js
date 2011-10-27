@@ -103,7 +103,7 @@ jQuery(document).ready(function(){
     });
 
     // Add handlers for the templates tags
-    var tpl_srcs = document.querySelectorAll('.tplsrc');
+    var tpl_srcs = document.querySelectorAll('.template_src');
     console.log("Tpl items", tpl_srcs);
     for (var i = 0; i < tpl_srcs.length; i++) {
         tpl_srcs[i].addEventListener('dragstart', function (e) {
@@ -187,6 +187,32 @@ function getDataTransfer(ev) {
     return {};
 }
 
+var binding_functions = {
+    // zone here is the dropping zone, so an element which receives the data
+    // data is the data object as transited from the beginning of the "publish"
+    // in the new_trash box.
+    text_to_html: function(zone, data) {
+        if ($(zone).data('type') == 'text') {
+            $(zone).html(data.data);
+        }
+    },
+    text_to_blockquote: function(zone, data) {
+        if ($(zone).data('type') == 'text') {
+            $(zone).html(data.data);
+            var stamp = $(zone).parent().find('.stamp');
+            stamp.html(data.stamp);
+            stamp.attr('contenteditable', "true");
+            
+        }        
+    },
+    text_to_value: function(zone, data) {
+        if ($(zone).data('type') == 'text') {
+            $(zone).val(data.data);
+        }
+    }
+};
+
+
 function set_bindings_broadcaster() {
     $('#broadcast .zone').each(function(el) {
         var self = this;
@@ -196,9 +222,9 @@ function set_bindings_broadcaster() {
             }
             data = getDataTransfer(e); 
             var src = e.target;
-            if ($(src).data('type') == 'text') {
-                $(src).html(data.cnt.data);
-            }
+  
+            // Call a binding functions attached via "data-bind='text_to_html'"
+            binding_functions[$(src).data('bind')](src, data.cnt);
 
             remove_over_class('nugget')(e);
 
@@ -235,8 +261,9 @@ function publish_chunk() {
     //  Main PUBLISHING function..
     //  takes the staging #broadcast area and SENDS it over to livefeed
     
-    // TODO: clean from "draggable", "contenteditable" attributes
     // TODO: remove nodes that aren't appropriate
+    $('#broadcast [draggable]').attr('draggable', null);
+    $('#broadcast [contenteditable]').attr('contenteditable', null);
     var html = $('#broadcast').html();
     console.log("Sending HTML", html);
     moderator.emit('broadcast', html);

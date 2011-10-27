@@ -98,8 +98,9 @@
             <!-- Ici on va avoir les templates, en phase 2, pour formatter l'output. -->
             <h3>Drag your templates from here:</h3>
             <ul>
-              <li><div class="tplsrc" data-tplname="blockquote" draggable="true">Blockquoted text</div></li>
-              <li><div class="tplsrc" data-tplname="twocol" draggable="true">A two columns layout</div></li>
+              <li><div class="template_src" data-tplname="blockquote" draggable="true">Blockquoted text</div></li>
+              <li><div class="template_src" data-tplname="twocol" draggable="true">A two columns layout</div></li>
+              <li><div class="template_src" data-tplname="image_text" draggable="true">Image (left) and text (right)</div></li>
             </ul>
           </div>
           <div id="broadcast">
@@ -146,22 +147,35 @@
     </div>
   </script>
 
+  <!-- Templates used by moderators -->
+ 
   <script id="template_blockquote" type="text/html">
     <div class="template template_blockquote">
-      <blockquote class="zone" data-type="text" contenteditable="true">Drop blockquote here</blockquote>
+      <blockquote class="zone" data-type="text" data-bind="text_to_blockquote" contenteditable="true">Drop blockquote here</blockquote>
       <div class="quote1">‘</div>
       <div class="quote2">’</div>
+      <div class="stamp"></div>
     </div>
   </script>
 
   <script id="template_twocol" type="text/html">
     <div class="template template_twocol">
       <table><tr>
-          <td class="zone td1" data-type="text" contenteditable="true">Drop text 1 here</td>
-          <td class="zone td2" data-type="text" contenteditable="true">Drop text 2 here</td>
+          <td class="zone td1" data-type="text" data-bind="text_to_html" contenteditable="true">Drop text 1 here</td>
+          <td class="zone td2" data-type="text" data-bind="text_to_html" contenteditable="true">Drop text 2 here</td>
       </tr></table>
     </div>
   </script>
+
+  <script id="template_image_text" type="text/html">
+    <div class="template template_image_text">
+      <table><tr>
+          <td class="zone image" data-type="img" data-bind="text_to_html"><img src="/img/sample-4.jpg" alt="Image here" title="Image here" /></td>
+          <td class="zone text" data-type="text" data-bind="text_to_html" contenteditable="true">Drop text here.</td>
+      </tr></table>
+    </div>
+  </script>
+
 
   <!-- JavaScript at the bottom for fast page loading -->
 
