@@ -412,6 +412,25 @@ button.publish, button.keep {
 }
 
 
+.template_twocol table {
+    margin: 20px;
+    width: 100%;
+}
+
+.template_twocol table .td1,
+.template_twocol table .td2 {
+    width: 42%;
+    text-align: right;
+    border-right: 1px solid #CCC;
+    padding: 2%;
+}
+
+.template_twocol table .td2 {
+    text-align: left;
+
+}
+
+
 
 
 
