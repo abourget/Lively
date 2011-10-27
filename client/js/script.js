@@ -70,57 +70,42 @@ jQuery(document).ready(function(){
     // TODO; see http://html5demos.com/js/h5utils.js  for addEvent polyfill
 
     // Moderator drag/drop events
-    var tpl_srcs = document.querySelectorAll('.tplsrc');
-    [].forEach.call(tpl_srcs, function(tpl_src) {
-        tpl_src.addEventListener("dragend", function(e) {
-            var srcDiv = e.srcElement;
-            var targetDiv = e.targetElement;
-            console.log("dragend for the tpl_src", targetDiv);
-        });
-    });
-    
     var broadcast = $('#broadcast')[0];
     console.log("Applying broadcast listeners");
     broadcast.addEventListener('drop', function(e) {
-        console.log("boo");
-         if (e.stopPropagation) {
-             e.stopPropagation(); // Stops some browsers from redirecting.
-         }
+        if (e.stopPropagation) {
+            e.stopPropagation(); // Stops some browsers from redirecting.
+        }
 
-        console.log("DROPPED", e);
-        
         var data = getDataTransfer(e);
         if (data.type == 'template') {
             var tpl_name = data.cnt;
-            console.log("Loading template", tpl_name);
             $('#broadcast').html(ich['template_' + tpl_name]({}));
             set_bindings_broadcaster();
         }
 
+        remove_over_class('template')(e);
+
         return false;
     });
-    broadcast.addEventListener('dragenter', function(e) {
-        var type = e.dataTransfer.getData('local/type');
-        $(broadcast).addClass(type + '-over');
-        console.log("added", type+'-over');
-    });
-    broadcast.addEventListener('dragleave', function(e) {
-        var type = e.dataTransfer.getData('local/type');
-        $(broadcast).removeClass(type + '-over');
-        console.log("removed", type+'-over');
-    });
+    broadcast.addEventListener('dragenter', add_over_class('template'));
+    broadcast.addEventListener('dragleave', remove_over_class('template'));
+    broadcast.addEventListener('dragend', remove_over_class('template'));
     broadcast.addEventListener('dragover', function(e) {
         if (e.preventDefault) e.preventDefault(); // Necessary. Allows us to drop.
+        add_over_class('template')(e);
         return false;
-    })
+    });
 
     // Add handlers for the templates tags
-    var tplItems = document.querySelectorAll('.tplsrc');
-    console.log("Tpl items", tplItems);
-    for (var i = 0; i < tplItems.length; i++) {
-        tplItems[i].addEventListener('dragstart', function (e) {
+    var tpl_srcs = document.querySelectorAll('.tplsrc');
+    console.log("Tpl items", tpl_srcs);
+    for (var i = 0; i < tpl_srcs.length; i++) {
+        tpl_srcs[i].addEventListener('dragstart', function (e) {
             // store the ID of the element, and collect it on the drop later on
-            setDataTransfer(e, {type: 'template', cnt: $(this).data('tplname')});
+            var data = {type: 'template', cnt: $(this).data('tplname')}
+            console.log("setting data on the TPL_SRC event obj", data);
+            setDataTransfer(e, data);
             return false;
         });
     }
@@ -153,13 +138,48 @@ jQuery(document).ready(function(){
 })
 
 
+function add_over_class(type) {
+    function active(e) {
+        var data = getDataTransfer(e);
+        if (data.type == type) {
+            $(broadcast).addClass(data.type + '-over');
+            console.log("add class", data.type + '-over');
+        }
+        return false;
+    }
+    return active
+}
+function remove_over_class(type) {
+    function active(e) {
+        var data = getDataTransfer(e);
+        if (data.type == type) {
+            $(broadcast).removeClass(data.type + '-over');
+            console.log("remove class", data.type + '-over');
+        }
+        return false;
+    }
+    return active;
+}
+
+
 /* JSON wrapped to data transfers */
 /* required because of bug in Chrome: http://code.google.com/p/chromium/issues/detail?id=31037 .. doesn't support Custom URIs.. should have see, setData returns 'false' when it fails */
 function setDataTransfer(ev, obj) {
+    data_xfer = obj;
+    return;
+
+    // Useless, doesn't provide the data in the dragenter or dragleave events!
     ev.dataTransfer.setData('text/plain', JSON.stringify(obj));
 }
 function getDataTransfer(ev) {
-    return JSON.parse(ev.dataTransfer.getData('text/plain'));
+    return data_xfer;
+
+    // This doesn't work in the dragenter event! darn it!
+    var data = ev.dataTransfer.getData('text/plain');
+    if (data) {
+        return JSON.parse(data);
+    }
+    return {};
 }
 
 function set_bindings_broadcaster() {
@@ -169,14 +189,21 @@ function set_bindings_broadcaster() {
             if (e.stopPropagation) {
                 e.stopPropagation(); // stops the browser from redirecting.
             }
-            console.log("BETTER DROP on zone");
             data = getDataTransfer(e); 
-            console.log("data from dtTrans", data);
             var src = e.target;
             if ($(src).data('type') == 'text') {
                 $(src).html(data.cnt.data);
             }
 
+            remove_over_class('nugget')(e);
+
+            return false;
+        });
+        this.addEventListener('dragenter', add_over_class('nugget'));
+        this.addEventListener('dragleave', remove_over_class('nugget'));
+        this.addEventListener('dragover', function(e) {
+            if (e.preventDefault) e.preventDefault();
+            add_over_class('nugget')(e);
             return false;
         });
     });
