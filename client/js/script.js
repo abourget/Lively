@@ -42,7 +42,6 @@ TODO: flag the content as USED when someone uses it in a broadcasted template, g
 
 var dropbox;
 var livefeed, moderator, publisher;
-var drag_src_el;
 
 jQuery(document).ready(function(){
     
@@ -143,8 +142,8 @@ jQuery(document).ready(function(){
         return false;
     });
     dropbox.addEventListener("drop", function(e) {
-        noopHandler(evt);
-        var files = evt.dataTransfer.files;
+        noopHandler(e);
+        var files = e.dataTransfer.files;
         var count = files.length;
 
         // Only call the handler if 1 or more files was dropped.
@@ -351,7 +350,7 @@ function handleFiles(files) {
 
 function handleReaderLoadEnd(evt) {
     var img = document.getElementById("preview");
-    img.src = evt.target.result;
+    publisher.json.emit('publish', {type: "img", data: evt.target.result});
 }
 
 

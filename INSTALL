@@ -4,5 +4,7 @@ Dependencies
 npm install socket.io
 npm install redis
 npm install mime
+npm install node-uuid
+
 
 

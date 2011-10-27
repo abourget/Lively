@@ -24,6 +24,7 @@ var url = require('url');
 var mime = require('mime');
 var sys = require('sys');
 var redis = require('redis');
+var uuid = require('node-uuid');
 
 //var formidable = require('formidable');
 var sio = require('socket.io');
@@ -121,8 +122,37 @@ function Server() {
         var int_queue = redis.createClient();
 
         socket.on('publish', function(data) {
-            console.log("WE'VE RECEIVED SOMETHING FROM THE PUBLISHER", data);
+            //console.log("Some publisher published: ", data);
             // Send something to the ADMIN queues
+            if (data.type == 'img') {
+                // Save the img to disk
+                var type_data = data.data.split(';');
+                var mime_type = type_data[0].split(':')[1];
+                var base64_data = type_data[1].split(',')[1];
+                var this_uuid = uuid();
+                if (mime_type == 'image/jpeg') {
+                    ext = ".jpg";
+                } else if (mime_type == 'image/png') {
+                    ext = ".png";
+                } else if (mime_type == 'image/gif') {
+                    ext = ".gif";
+                }
+                var path = '/images/' + this_uuid + ext
+                var filename = __dirname + '/client' + path;
+                console.log(type_data, mime_type, base64_data, this_uuid, path, filename);
+                var decoded = new Buffer(base64_data, 'base64');
+                console.log(decoded);
+                fs.writeFile(filename, decoded, function(err) {
+                    if (!err) { console.log("File saved"); }
+                    else { console.log("Ouch, file not saved"); }
+                });
+
+                delete data.data;
+                // Replace the message with the LINK to the image
+                data.type = 'img_src';
+                // Push an 'img_src' message instead
+                data.src = path;
+            }
             int_queue.publish('new_trash', data.data);
         });
 
