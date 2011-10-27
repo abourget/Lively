@@ -13,8 +13,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
   <title></title>
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="description" content="CoverItLive, like a free man.">
+  <meta name="author" content="Jean-Maxime Couillard, Alexandre Bourget">
 
   <!-- Mobile viewport optimized: j.mp/bplateviewport -->
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -40,8 +40,8 @@
   <div id="container">
     <header>
       <div class="enable_actions">
-        <button class="enable_publisher button medium blue" onclick="enable_publisher(); return false;">Publish stuff</button>
-        <button class="enable_moderator button medium rosy" onclick="enable_moderator(); return false;">Moderator</button>
+        <button class="enable_publisher button medium blue" onclick="enable_publisher(); return false;" accesskey="p">Publish stuff</button>
+        <button class="enable_moderator button medium rosy" onclick="enable_moderator(); return false;" accesskey="m">Moderator</button>
       </div>
       <h1>YouPush - http://youpush.abourget.net/</h1>
     </header>
@@ -120,7 +120,7 @@
   <script id="moderator_snippet" type="text/html">
     <div class="mod_snippet datanode">
       <div class="item">
-        <button class="keep button small green" onclick="keep_snippet(this); return false;">KEEP!</button>
+        <button class="keep button small green" onclick="keep_snippet(this); return false;" accesskey="k">KEEP!</button>
         <div class="content-wrapper">
           <div class="text"><strong>{{ stamp }}</strong>: {{ data }}</div>
         </div>  
@@ -131,7 +131,6 @@
   <script id="nugget_snippet" type="text/html">
     <div class="nugget_snippet datanode" draggable="true">
       <div class="item">
-      <button class="publish" onclick="publish_snippet(this); return false;">PUBLISH!</button>
         <div class="content-wrapper">
           <div class="text"><strong>{{ stamp }}</strong>: {{ data }}</div>
         </div>  
@@ -158,8 +157,8 @@
   <script id="template_twocol" type="text/html">
     <div class="template template_twocol">
       <table><tr>
-          <td class="zone" data-type="text">Drop text 1 here</td>
-          <td class="zone" data-type="text">Drop text 2 here</td>
+          <td class="zone td1" data-type="text">Drop text 1 here</td>
+          <td class="zone td2" data-type="text">Drop text 2 here</td>
       </tr></table>
     </div>
   </script>
