@@ -19,6 +19,11 @@ Random quotes:
 TODO: implement the image UPLOAD (taken from the crhack server)
 TODO: implement the SERVER-SIDE saving of the feed, and re-showing upon next page load.. (so that we can continue the flow)
 TODO: implement comments, that are different from the PUBLISH stuff.. and can be sent by anyone (when activated by the moderator ?)
+TODO: implement server-side permissions checks
+TODO: implement authentication
+TODO: implement "multiple live events" on the service (using name-prefixed queues)
+TODO: flag the content as USED when someone uses it in a broadcasted template, gray it out for all moderators
+
 
  Demoed:
   nodejs
@@ -37,7 +42,7 @@ TODO: implement comments, that are different from the PUBLISH stuff.. and can be
 
 var dropbox;
 var livefeed, moderator, publisher;
-
+var drag_src_el;
 
 jQuery(document).ready(function(){
     
@@ -99,7 +104,13 @@ jQuery(document).ready(function(){
     });
     broadcast.addEventListener('dragenter', add_over_class('template'));
     broadcast.addEventListener('dragleave', remove_over_class('template'));
-    broadcast.addEventListener('dragend', remove_over_class('template'));
+    broadcast.addEventListener('dragend', function(e) {
+        console.log("OOPS!");
+        if (drag_src_el) {
+            $(drag_src_el).css('opacity', 1.0);
+        }
+        return remove_over_class('template')(e);
+    });
     broadcast.addEventListener('dragover', function(e) {
         if (e.preventDefault) e.preventDefault(); // Necessary. Allows us to drop.
         add_over_class('template')(e);
@@ -126,7 +137,7 @@ jQuery(document).ready(function(){
     // Init event handlers for image upload
     dropbox = document.getElementById("dropbox");
     dropbox.addEventListener("dragenter", dnd_cancel);
-    dropbox.addEventListener("dragexit", dnd_cancel);
+    dropbox.addEventListener("dragleave", dnd_cancel);
     dropbox.addEventListener("dragover", function(e) {
         if (e.preventDefault) e.preventDefault(); // Necessary. Allows us to drop.
         return false;
@@ -255,9 +266,16 @@ function keep_snippet(moderator_el) {
 function attach_nugget_dnd(el, data) {
     // DND support for new nuggets (live trash that we want to keep :)
     el.addEventListener('dragstart', function(e) {
+        $(el).css('opacity', 0.4);
         setDataTransfer(e, {type: "nugget", cnt: data});
         return false;
     });
+    el.addEventListener('dragend', function(e) {
+        console.log(e);
+        $(el).css('opacity', 1.0);
+        return remove_over_class('template')(e);
+    });
+
 }
 
 
