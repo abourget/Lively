@@ -10,7 +10,6 @@
  * ==|== normalize ==========================================================
  */
 
-
 /* =============================================================================
    HTML5 display definitions
    ========================================================================== */
@@ -325,6 +324,7 @@ h2 {
     margin: 0px;
     display: inline-block;    
     position: relative;
+    z-index: 0;
 }
 
 .item .content-wrapper,
@@ -362,7 +362,13 @@ button.publish, button.keep {
   position: absolute;
   top: 5px;
   right: 5px;  
+  z-index: 5;
 }
+
+.moderator_wrapper, .nugget_wrapper {
+  position: relative;
+}
+
 
 
 

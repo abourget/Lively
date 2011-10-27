@@ -81,14 +81,15 @@ function Server() {
 
         // When we receive messages, treat them this way:
         int_queue.on('message', function(channel, msg) {
+            var msg = JSON.parse(msg);
             // Send to the admin's browser
-            console.log("We've received something from the INTERNAL queue", msg);
+            console.log("Got msg on internal queues", channel, msg);
             if (channel == 'new_trash') {
-                var now = new Date();
-                socket.json.emit("new_trash", {type: "msg", data: msg, stamp: now.toDateString()});
+                // Broadcast to clients
+                socket.json.emit("new_trash", msg);
             } else if (channel == 'new_nugget') {
-                // Message received AS-IS from the client
-                socket.json.emit("new_nugget", JSON.parse(msg));
+                // Broadcast to clients
+                socket.json.emit("new_nugget", msg);
             }
         });
         // Register to the REDIS queue 'public'
@@ -139,9 +140,7 @@ function Server() {
                 }
                 var path = '/images/' + this_uuid + ext
                 var filename = __dirname + '/client' + path;
-                console.log(type_data, mime_type, base64_data, this_uuid, path, filename);
                 var decoded = new Buffer(base64_data, 'base64');
-                console.log(decoded);
                 fs.writeFile(filename, decoded, function(err) {
                     if (!err) { console.log("File saved"); }
                     else { console.log("Ouch, file not saved"); }
@@ -153,7 +152,10 @@ function Server() {
                 // Push an 'img_src' message instead
                 data.src = path;
             }
-            int_queue.publish('new_trash', data.data);
+            var now = new Date();
+            data.stamp = now.toDateString();
+
+            int_queue.publish('new_trash', JSON.stringify(data));
         });
 
         socket.on('disconnect', function() {

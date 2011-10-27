@@ -43,6 +43,14 @@ TODO: flag the content as USED when someone uses it in a broadcasted template, g
 var dropbox;
 var livefeed, moderator, publisher;
 
+
+/* outerHTML, stolen from: http://www.yelotofu.com/2008/08/jquery-outerhtml/ */
+jQuery.fn.outerHTML = function(s) {
+    return (s)
+        ? this.before(s).remove()
+        : jQuery("<p>").append(this.eq(0).clone()).html();
+}
+
 jQuery(document).ready(function(){
     
     // Define socket connection
@@ -68,13 +76,17 @@ jQuery(document).ready(function(){
     // TODO: put this in the enable_moderator() code
     moderator.on('new_trash', function(data) {
         console.log("New trash", data);
-        var tpl = ich.moderator_snippet(data);
+        var inner_tpl = ich['snippet_' + data.type](data);
+        var tpl = ich.moderator_wrapper({inner_tpl: inner_tpl.outerHTML(),
+                                         data: data});
         $(tpl, '.datanode').data('data', data);
         var el = $('#live_trash').append(tpl);
     });
     moderator.on('new_nugget', function(data) {
         console.log("New nugget", data);
-        var tpl = ich.nugget_snippet(data);
+        var inner_tpl = ich['snippet_' + data.type](data);
+        var tpl = ich.nugget_wrapper({inner_tpl: inner_tpl.outerHTML(),
+                                              data: data});
         $(tpl, '.datanode').data('data', data);
         var el = $('#nuggets').append(tpl);
         attach_nugget_dnd(tpl[0], data);
