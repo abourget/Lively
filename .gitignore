@@ -6,3 +6,6 @@ pip-log.txt
 
 .DS_Store
 npm-debug.log
+
+# Uploaded images.
+client/images

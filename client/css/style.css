@@ -404,6 +404,7 @@ button.publish, button.keep {
 
 #broadcast.nugget-over .zone {
   border: 1px solid red;
+  z-index: 100;
 }
 
 #publish_button {

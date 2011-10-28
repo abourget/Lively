@@ -169,23 +169,29 @@ jQuery(document).ready(function(){
 })
 
 
-function add_over_class(type) {
+function add_over_class(type, prevent_default) {
     function active(e) {
+        // Prevent default ?
+        if (prevent_default && e.preventDefault) { e.preventDefault(); }
+
         var data = getDataTransfer(e);
         if (data.type == type) {
             $(broadcast).addClass(data.type + '-over');
-            console.log("add class", data.type + '-over');
+            //console.log("add class", data.type + '-over');
         }
         return false;
     }
     return active
 }
-function remove_over_class(type) {
+function remove_over_class(type, prevent_default) {
     function active(e) {
+        // Prevent default ?
+        if (prevent_default && e.preventDefault) { e.preventDefault(); }
+
         var data = getDataTransfer(e);
         if (data.type == type) {
             $(broadcast).removeClass(data.type + '-over');
-            console.log("remove class", data.type + '-over');
+            //console.log("remove class", data.type + '-over');
         }
         return false;
     }
@@ -254,6 +260,9 @@ function set_bindings_broadcaster() {
             }
             data = getDataTransfer(e); 
             var src = e.target;
+            if (!$(src).hasClass('zone')) {
+                src = $(src).parents('.zone')[0];
+            }
   
             // Call a binding functions attached via "data-bind='text_to_html'"
             binding_functions[$(src).data('bind')](src, data.cnt);
@@ -262,8 +271,8 @@ function set_bindings_broadcaster() {
 
             return false;
         });
-        this.addEventListener('dragenter', add_over_class('nugget'));
-        this.addEventListener('dragleave', remove_over_class('nugget'));
+        this.addEventListener('dragenter', add_over_class('nugget', true));
+        this.addEventListener('dragleave', remove_over_class('nugget', true));
         this.addEventListener('dragover', function(e) {
             if (e.preventDefault) e.preventDefault();
             add_over_class('nugget')(e);
@@ -290,7 +299,7 @@ function attach_nugget_dnd(el, data) {
     el.addEventListener('dragend', function(e) {
         console.log(e);
         $(el).css('opacity', 1.0);
-        return remove_over_class('template')(e);
+        return remove_over_class('nugget')(e);
     });
 
 }
