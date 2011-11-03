@@ -37,28 +37,29 @@
 
 <body>
   <header>
-    <h1>Random page from a random customer</h1>
+    <div class="enable_actions">
+      <a href="/publisher.html" class="enable_moderator button medium rosy" accesskey="m">Publisher/Moderator</a>
+    </div>
   </header>
 
   <div id="main" role="main">
-    <h2>This is my own content</h2>
-    
+	
+    <div id="LIVELY-cnt">
+        
+      <h2>Lively Feed</h2>
+        
+      <div id="LIVELY-feed"></div>
 
-    <p>Here comes the LIVELY feed:</p>
-    <div id="LIVELY-cnt"></div>
-    <script>
-      var LIVELY = LIVELY || {};
-      LIVELY.feed_name = 'japan2011';
-      LIVELY.something = 'bob';
-    </script>
-    <script src="/js/libs/yepnope.1.0.2-min.js"></script>
-    <script src="/js/livefeed.js"></script>
+      <div class="LIVELY-commentbox">
+        <span>Comment <small class="small">then hit ENTER</small>:</span>
+        <input type="text" id="commenter_text" accesskey="c" />
+        <div id="commenter_message"></div>
+      </div>
 
-    <p>Back to my content</p>
-
-    <p>Glad you're using my site</p>
-
-
+      <div class="LIVELY-footer">
+        Keyboard shortcuts: <b>Alt+C</b> to go to Comment box
+      </div>
+    </div>
   </div> <!--! end of #container -->
     
 
@@ -69,6 +70,9 @@
 
   <!-- scripts concatenated and minified via ant build script-->
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800' rel='stylesheet' type='text/css'>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/libs/yepnope.1.0.2-min.js"></script>
+  <script defer src="/js/livefeed.js"></script>
   <!-- end scripts-->
 
 	

@@ -1,0 +1,26 @@
+TODO
+----
+
+* Afficher quelque chose qui montre qu'on est connecté, et PAS un spinner
+** Un petit graphique qui se connecte et déconnecte quand on est offline!
+
+* Implement the EMBED feature (for the Live feed)
+** Découvrir comment on fait ça..
+** Embed jQuery sans affecter rien autour ?
+** Tout mettre dans un:
+   (function($) {
+     // stuff
+   }(LIVELY.jQuery))
+
+* Namespace le tout
+** Pour pouvoir avoir plusieurs feeds concourrants
+** Incluant les images et vidéos
+
+* Server-side SAVE of a session
+** Store in a Redis list ?
+
+* Rework l'interface, faire quelques mock-ups ?
+** Avoir deux panneaux  ?  Un nombre de panneaux X ?  Donner un nom à chaque panneau pour filtrer..
+
+* Split les commentaires de la publication
+** Les commentaires arrivent séparément et avec un style plus "bleuté" ?

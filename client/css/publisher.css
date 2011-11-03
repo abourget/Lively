@@ -223,13 +223,6 @@ header {
   position: relative;
 }
 
-footer {
-  text-align: center;
-  font-size: small;
-  color: #888;
-  padding: 25px 10px 25px;
-}
-
 body {
     font-family: 'Open Sans', sans-serif;
     background: white url('/img/bg.jpg') repeat 0 0;
@@ -285,46 +278,6 @@ h1 {
 	position: relative;
 	top: 20%;
 }
-
-
-
-
-
-/**
- * Nugget styles, for each data type
- * These are used for new_nugget and new_trash elements.
- */
-
-
-.nugget {
-    background-image: -webkit-gradient(
-    	linear,
-    	left bottom,
-    	left top,
-    	color-stop(0.49, rgb(237,237,237)),
-    	color-stop(0.75, rgb(245,245,245))
-    );
-    
-    width:100%;    
-    border-top: 1px #FFF solid;
-    border-bottom: 1px #CCC solid;
-    margin: 0px;
-    display: inline-block;    
-    position: relative;
-    z-index: 0;
-}
-
-.nugget .content-wrapper {
-    display: inline-block;
-    margin:5px;
-}
-
-.nugget-text .text {
-    display: inline-block;
-    float: left;
-    margin: 10px 2px;
-}
-
 
 
 
@@ -412,86 +365,6 @@ button.publish, button.keep {
 
 
 
-
-
-/**
- * Styles for TEMPLATES (that are drag'n'droppable) which constitute
- * the elements that will be send to ALL participants
- */
-.template {
-    background-image: -webkit-gradient(
-    	linear,
-    	left bottom,
-    	left top,
-    	color-stop(0.49, rgb(237,237,237)),
-    	color-stop(0.75, rgb(245,245,245))
-    );
-    
-    width:100%;    
-    border-top: 1px #FFF solid;
-    border-bottom: 1px #CCC solid;
-    margin: 0px;
-    display: inline-block;    
-    position: relative;
-    z-index: 0;
-}
-
-.template_blockquote {
-    font-size: 20px;
-    color: #777;
-    position: relative;
-}
-.template_blockquote .quote1,
-.template_blockquote .quote2 {
-    font-family: 'Arial', arial;
-    font-size: 150px;
-    color: #CCC;
-    position: absolute;
-    top: -20px;
-    left: 0px;
-    display: block;
-}
-.template_blockquote .quote2 {
-    top: -20px;
-    right: 20px;
-    left: auto;
-}
-.template_blockquote .stamp {
-    font-size: 60%;
-    text-align: right;
-    padding-left: 1em;
-    padding-bottom: 1em;
-}
-
-.template_twocol table {
-    margin: 0;
-    width: 100%;
-}
-.template_twocol table .td1,
-.template_twocol table .td2 {
-    width: 42%;
-    text-align: right;
-    border-right: 1px solid #CCC;
-    padding: 2%;
-}
-.template_twocol table .td2 {
-    text-align: left;
-}
-
-
-.template_image_text {}
-.template_image_text .image {
-  width: 30%;
-  padding: 7px;
-}
-.template_image_text .image img {
-  max-width: 100%;
-  border: 5px solid #e8e8e8;
-}
-.template_image_text .text {
-  width: 70%;
-  padding-left: 15px;
-}
 
 
 

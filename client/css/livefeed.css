@@ -1,0 +1,182 @@
+/**
+ * Embedded styles for the Live feed
+ */
+
+#LIVELY-cnt .LIVELY-commentbox {
+  padding: 0.8ex;
+}
+#LIVELY-cnt .LIVELY-commentbox span {
+  padding-right: 1em;
+  font-size: 120%;
+  font-weight: bold;
+}
+#LIVELY-cnt .LIVELY-commentbox small {
+  font-size: 80%;
+  color: #666;
+  padding: 1ex;
+}
+#LIVELY-cnt .LIVELY-commentbox input {
+    border-radius: 10px;
+    height: 3ex;
+    font-size: 120%;
+    border: 1px solid #CCC;
+    width: 70%;
+    outline: 0;
+    padding: 10px;
+}
+
+#LIVELY-cnt h2 {
+    color:#666;
+    border-bottom: 1px solid #999;
+    line-height:13px;
+    font-size: 20px;
+    text-transform: uppercase;
+    padding-left: 5px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+#LIVELY-cnt .LIVELY-footer {
+  text-align: center;
+  font-size: small;
+  color: #888;
+  padding: 25px 10px 25px;
+}
+
+
+
+
+/**
+ * Nugget styles, for each data type
+ * These are used for new_nugget and new_trash elements.
+ */
+
+
+#LIVELY-cnt .nugget {
+    background-image: -webkit-gradient(
+    	linear,
+    	left bottom,
+    	left top,
+    	color-stop(0.49, rgb(237,237,237)),
+    	color-stop(0.75, rgb(245,245,245))
+    );
+    
+    width:100%;    
+    border-top: 1px #FFF solid;
+    border-bottom: 1px #CCC solid;
+    margin: 0px;
+    display: inline-block;    
+    position: relative;
+    z-index: 0;
+}
+
+#LIVELY-cnt .nugget .content-wrapper {
+    display: inline-block;
+    margin:5px;
+}
+
+#LIVELY-cnt .nugget-text .text {
+    display: inline-block;
+    float: left;
+    margin: 10px 2px;
+}
+
+
+
+
+
+
+/**
+ * Styles for TEMPLATES (that are drag'n'droppable) which constitute
+ * the elements that will be send to ALL participants
+ */
+#LIVELY-cnt .template {
+    background-image: -webkit-gradient(
+    	linear,
+    	left bottom,
+    	left top,
+    	color-stop(0.49, rgb(237,237,237)),
+    	color-stop(0.75, rgb(245,245,245))
+    );
+    
+    width:100%;    
+    border-top: 1px #FFF solid;
+    border-bottom: 1px #CCC solid;
+    margin: 0px;
+    display: inline-block;    
+    position: relative;
+    z-index: 0;
+}
+
+#LIVELY-cnt .template_blockquote {
+    font-size: 20px;
+    color: #777;
+    position: relative;
+}
+#LIVELY-cnt .template_blockquote .quote1,
+#LIVELY-cnt .template_blockquote .quote2 {
+    font-family: 'Arial', arial;
+    font-size: 150px;
+    color: #CCC;
+    position: absolute;
+    top: -20px;
+    left: 0px;
+    display: block;
+}
+#LIVELY-cnt .template_blockquote .quote2 {
+    top: -20px;
+    right: 20px;
+    left: auto;
+}
+#LIVELY-cnt .template_blockquote .stamp {
+    font-size: 60%;
+    text-align: right;
+    padding-left: 1em;
+    padding-bottom: 1em;
+}
+
+#LIVELY-cnt .template_twocol table {
+    margin: 0;
+    width: 100%;
+}
+#LIVELY-cnt .template_twocol table .td1,
+#LIVELY-cnt .template_twocol table .td2 {
+    width: 42%;
+    text-align: right;
+    border-right: 1px solid #CCC;
+    padding: 2%;
+}
+#LIVELY-cnt .template_twocol table .td2 {
+    text-align: left;
+}
+
+
+#LIVELY-cnt .template_image_text {}
+#LIVELY-cnt .template_image_text .image {
+  width: 30%;
+  padding: 7px;
+}
+#LIVELY-cnt .template_image_text .image img {
+  max-width: 100%;
+  border: 5px solid #e8e8e8;
+}
+#LIVELY-cnt .template_image_text .text {
+  width: 70%;
+  padding-left: 15px;
+}
+
+
+
+/**
+ * TEMPORARY ONLY
+ */
+#LIVELY-cnt .enable_actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  text-align: right;
+  z-index: 100;
+}
+#LIVELY-cnt .enable_actions button {
+  margin: 2px;
+  display: block
+}

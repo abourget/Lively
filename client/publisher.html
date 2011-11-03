@@ -1,0 +1,209 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!-- Consider adding an manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/b/378 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title></title>
+  <meta name="description" content="Lively live-blogging, for the a free man.">
+  <meta name="author" content="Alexandre Bourget">
+
+  <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+  <!-- CSS: implied media=all -->
+  <!-- CSS concatenated and minified via ant build script-->
+  <link rel="stylesheet" href="/css/livefeed.css">
+  <link rel="stylesheet" href="/css/publisher.css">
+  <!-- end CSS-->
+
+  <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+
+
+  <!-- All JavaScript at the bottom, except for Modernizr / Respond.
+       Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
+       For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
+  <script src="/js/libs/modernizr-2.0.6.min.js"></script>
+</head>
+
+<body>
+  <div id="LIVELY-cnt">
+    <header>
+      <h1>Lively control panel</h1>
+    </header>
+    
+    
+    <div id="main" role="main">
+	
+        <div id="publisher">
+        <!-- Ici on va avoir les contrôles pour ENVOYER des choses -->
+          <h2>Publisher</h2>
+            
+
+          <div class="content-wrapper">
+            <input type="text" id="publisher_text" />
+      	    <div id="dropbox"><span id="droplabel">Drop file here...</span></div>
+          </div>
+
+          <div id="sent_message"></div>
+        </div>
+        
+
+
+
+        
+        <div id="moderator">
+
+          <h1 style="text-align: center;">Moderator panel</h1>  
+          <div id="live_trash">
+            <h2>Live trash coming in...</h2>
+            <!-- Ici va arriver TOUT le stock de tout le monde -->
+
+          </div>
+          <div id="nuggets">
+            <h2>Good nuggets</h2>
+            <!-- Ici on va avoir les choses qu'on a sélectionné dans le trash -->
+          </div>
+          <div id="templates">
+            <!-- Ici on va avoir les templates, en phase 2, pour formatter l'output. -->
+            <h3>Drag your templates from here:</h3>
+            <ul>
+              <li><div class="template_src" data-tplname="blockquote" draggable="true">Blockquoted text</div></li>
+              <li><div class="template_src" data-tplname="twocol" draggable="true">A two columns layout</div></li>
+              <li><div class="template_src" data-tplname="image_text" draggable="true">Image (left) and text (right)</div></li>
+            </ul>
+          </div>
+          <div id="broadcast">
+            <!-- Ici, on va juste dropper ce qu'on veut publier et ça PART en live -->
+            Drop your template here.
+          </div>
+          <div id="publish_button">
+            <button class="button humonguous orange" accesskey="s">PUBLISH!</button>
+          </div
+        </div>
+    </div>
+    <footer>
+      Keyboard shortcuts: <b>Alt+P</b> to go to Publish mode | <b>Alt+M</b> to go to moderator mode | <b>Alt+S</b> to publish the staged content
+    </footer>
+  </div> <!--! end of #container -->
+    
+  <!-- Template snippets -->
+  <script id="moderator_wrapper" type="text/html">
+    <div class="moderator_wrapper datanode" draggable="true">
+      <button class="keep button small green" accesskey="k">KEEP</button>
+      {{{ inner_tpl }}}
+    </div>
+  </script>
+
+  <script id="nugget_wrapper" type="text/html">
+    <div class="nugget_wrapper datanode" draggable="true">
+      {{{ inner_tpl }}}
+    </div>
+  </script>
+
+ 
+  <!-- Snippets for different data types (from new_trash or new_nugget) -->
+  <script id="snippet_text" type="text/html">
+    <div class="nugget nugget-text">
+      <div class="content-wrapper">
+        <div class="text"><strong>{{ stamp }}</strong>: {{ data }}</div>
+      </div>  
+    </div>
+  </script>
+
+  <script id="snippet_comment" type="text/html">
+    <div class="nugget nugget-comment">
+      <div class="content-wrapper">
+        <div class="comment"><strong>{{ stamp }}</strong>: {{ data }}</div>
+      </div>  
+    </div>
+  </script>
+
+  <script id="snippet_img_src" type="text/html">
+    <div class="nugget nugget-img-src">
+      <div class="content-wrapper">
+        <img src="{{ src }}" alt="[img]" />
+        <span>{{ src }}</span>
+      </div>  
+    </div>
+  </script>
+
+  <!-- Templates used by moderators:
+    In the templates:
+    * use the .zone class to mark a droppable zone.
+    * use the .delete class to mark a node to be deleted before publishing
+      (for controls, etc..)
+    * data-type, data-bind
+  -->
+ 
+  <script id="template_blockquote" type="text/html">
+    <div class="template template_blockquote">
+      <blockquote class="zone" data-type="text" data-bind="text_to_blockquote" contenteditable="true">Drop blockquote here</blockquote>
+      <div class="quote1">‘</div>
+      <div class="quote2">’</div>
+      <div class="stamp"></div>
+    </div>
+  </script>
+
+  <script id="template_twocol" type="text/html">
+    <div class="template template_twocol">
+      <table><tr>
+          <td class="zone td1" data-type="text" data-bind="text_to_html" contenteditable="true">Drop text 1 here</td>
+          <td class="zone td2" data-type="text" data-bind="text_to_html" contenteditable="true">Drop text 2 here</td>
+      </tr></table>
+    </div>
+  </script>
+
+  <script id="template_image_text" type="text/html">
+    <div class="template template_image_text">
+      <table><tr>
+          <td class="zone image" data-type="img" data-bind="img_src_to_img"><img src="/img/sample-4.jpg" alt="Image here" title="Image here" /></td>
+          <td class="zone text" data-type="text" data-bind="text_to_html" contenteditable="true">Drop text here.</td>
+      </tr></table>
+    </div>
+  </script>
+
+
+  <!-- JavaScript at the bottom for fast page loading -->
+
+  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+  <script src="/js/libs/jquery-1.6.2.min.js"></script>
+
+  <!-- scripts concatenated and minified via ant build script-->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800' rel='stylesheet' type='text/css'>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/mylibs/ICanHaz.min.js"></script>
+  <script defer src="/js/plugins.js"></script>
+  <script defer src="/js/mylibs/jquery.event.drag-2.0.min.js"></script>
+  <script defer src="/js/publisher.js"></script>
+  <!-- end scripts-->
+
+	
+  <!-- Change UA-XXXXX-X to be your site's ID -->
+  <script>
+    window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
+    Modernizr.load({
+      load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+    });
+  </script>
+
+
+  <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
+       chromium.org/developers/how-tos/chrome-frame-getting-started -->
+  <!--[if lt IE 7 ]>
+    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+    <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+  <![endif]-->
+  
+</body>
+</html>

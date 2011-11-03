@@ -1,0 +1,23 @@
+Lively is like Cover It Live, ScribbleLive, or Breaking News, but for the free man.  It is similar (at least from the output perspective) to what you get from Gizmodo's, Engadget's and other news outlets "Live news coverage" pages.
+
+It was started in 6 hous at the HTML5 Hackathon in Montreal, on October 26th 2011.  Since then, we might have added a couple of things but we got something fully functional with text inputs on that day, including templates and drag'n'drop for layout and publishing, the live trash and the nuggets panels.
+
+TODO: implement the SERVER-SIDE saving of the feed, and re-showing upon next page load.. (so that we can continue the flow)
+TODO: implement server-side permissions checks
+TODO: implement authentication
+TODO: implement "multiple live events" on the service (using name-prefixed queues)
+TODO: flag the content as USED when someone uses it in a broadcasted template, gray it out for all moderators
+
+
+ Demoed:
+  nodejs
+   - some code based on crhack (DJBreakpoint ?)
+  nodejs-socketio (client and server)
+   - websockets
+  node-redis
+   - broadcasting queues
+  icanhaz (templating based on Mustache)
+  jQuery
+  CSS3 buttons
+  HTML5 boilerplate (by Paul Irish)
+  CSS Fonts
