@@ -37,7 +37,7 @@ LIVELY.init = function($) { /* start module */
           </div>');
     
         // Define socket connection
-        livefeed = LIVELY.io.connect('http://youpush.abourget.net/livefeed'); //, {'transports': ['xhr-polling']});
+        livefeed = LIVELY.io.connect('http://youpush.abourget.net/livefeed', {'transports': ['jsonp-polling', 'websocket']});
 
         // Define socket events
         livefeed.on('new_item', function(data) {

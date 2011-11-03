@@ -52,13 +52,19 @@
 
 
 #LIVELY-cnt .nugget {
+    background-image: linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+    background-image: -o-linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+    background-image: -moz-linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+    background-image: -webkit-linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+    background-image: -ms-linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+
     background-image: -webkit-gradient(
-    	linear,
-    	left bottom,
-    	left top,
-    	color-stop(0.49, rgb(237,237,237)),
-    	color-stop(0.75, rgb(245,245,245))
-    );
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.46, rgb(237,237,237)),
+	color-stop(0.87, rgb(245,245,245))
+);
     
     width:100%;    
     border-top: 1px #FFF solid;
@@ -90,13 +96,19 @@
  * the elements that will be send to ALL participants
  */
 #LIVELY-cnt .template {
+    background-image: linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+    background-image: -o-linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+    background-image: -moz-linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+    background-image: -webkit-linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+    background-image: -ms-linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+
     background-image: -webkit-gradient(
-    	linear,
-    	left bottom,
-    	left top,
-    	color-stop(0.49, rgb(237,237,237)),
-    	color-stop(0.75, rgb(245,245,245))
-    );
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.46, rgb(237,237,237)),
+	color-stop(0.87, rgb(245,245,245))
+);
     
     width:100%;    
     border-top: 1px #FFF solid;
