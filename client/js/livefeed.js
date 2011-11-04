@@ -1,9 +1,12 @@
 /** Author: 
  * LICENSE: GNU Affero General Public License version 3
- * Alexandre Bourget, Jean-Maxime Couillard, Hackathon HTML5, October 26 2011
+ * Alexandre Bourget (c) 2011
  */
 
 var LIVELY = LIVELY || {};
+if (LIVELY.root_url === undefined) {
+    LIVELY.root_url = 'http://lively.abourget.net';
+}
 
 LIVELY.init = function($) { /* start module */
     var livefeed;
@@ -37,7 +40,7 @@ LIVELY.init = function($) { /* start module */
           </div>');
     
         // Define socket connection
-        livefeed = LIVELY.io.connect('http://youpush.abourget.net/livefeed', {'transports': ['jsonp-polling', 'websocket']});
+        livefeed = LIVELY.io.connect(LIVELY.root_url + '/livefeed', {'transports': ['jsonp-polling', 'websocket']});
 
         // Define socket events
         livefeed.on('new_item', function(data) {
@@ -53,7 +56,7 @@ LIVELY.init = function($) { /* start module */
 
 yepnope([
     // Load jQuery, and make it noConflict
-    {load: "http://youpush.abourget.net/js/libs/jquery-1.6.4.min.js",
+    {load: LIVELY.root_url + "/js/libs/jquery-1.6.4.min.js",
      complete: function() {
          LIVELY.jQuery = jQuery.noConflict(true);
          LIVELY._io = window.io;
@@ -61,7 +64,7 @@ yepnope([
     },
     // Load Socket.IO, let's assume no one uses that.. otherwise we'll need to
     // prefix it, or let's change the global object for a LIVELY.io namespace
-    {load: "http://youpush.abourget.net/socket.io/socket.io.js",
+    {load: LIVELY.root_url + "/socket.io/socket.io.js",
      complete: function() {
          // Make socket.io non-conflicting
          LIVELY.io = window.io;
@@ -70,5 +73,5 @@ yepnope([
 
          LIVELY.init(LIVELY.jQuery);
      }},
-    {load: "http://youpush.abourget.net/css/livefeed.css"}
+    {load: LIVELY.root_url + "/css/livefeed.css"}
 ]);

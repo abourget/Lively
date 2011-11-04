@@ -2,6 +2,9 @@
  *   Alexandre Bourget (c) alex@bourget.cc
  */
 var LIVELY = LIVELY || {};
+if (LIVELY.root_url === undefined) {
+    LIVELY.root_url = 'http://lively.abourget.net';
+}
 
 (function($) { /* start module */
 
@@ -74,27 +77,26 @@ var binding_functions = {
     // data is the data object as transited from the beginning of the "publish"
     // in the new_trash box.
     text_to_html: function(zone, data) {
-        if ($(zone).data('type') == 'text') {
+        $(zone).html(data.data);
+    },
+    quote_to_blockquote: function(zone, data) {
+        if (data.type == 'quote') {
+            $(zone).html(data.quote + ' &mdash; ' + data.author);
+        } else if (data.type == 'text') {
+            $(zone).html(data.data);
+        } else if (data.type == 'comment') {
             $(zone).html(data.data);
         }
-    },
-    text_to_blockquote: function(zone, data) {
-        if ($(zone).data('type') == 'text') {
-            $(zone).html(data.data);
-            var stamp = $(zone).parent().find('.stamp');
-            stamp.html(data.stamp);
-            stamp.attr('contenteditable', "true");
-            
-        }        
+        
+        var stamp = $(zone).parent().find('.stamp');
+        stamp.html(data.stamp);
+        stamp.attr('contenteditable', "true");
     },
     text_to_value: function(zone, data) {
-        if ($(zone).data('type') == 'text') {
-            $(zone).val(data.data);
-        }
+        $(zone).val(data.data);
     },
     img_src_to_img: function(zone, data) {
-        console.log("img_src_to_img");
-        if ($(zone).data('type') == 'img' && data.type == 'img_src') {
+        if (data.type == 'img_src') {
             $('img', zone).attr('src', data.src);
         }
     }
@@ -162,6 +164,16 @@ function publish_chunk() {
     // TODO: remove nodes that aren't appropriate
     $('#broadcast [draggable]').attr('draggable', null);
     $('#broadcast [contenteditable]').attr('contenteditable', null);
+    $('#broadcast [data-type]').attr('data-type', null);
+    $('#broadcast [data-bind]').attr('data-bind', null);
+    $('#broadcast .zone').removeClass('zone');
+    $('#broadcast [src]').each(function(el) {
+        // Make sure SRC elements are ABSOLUTE
+        console.log(el, this, this.src, $(this).attr('src'));
+        if ($(this).attr('src')[0] == '/') {
+            $(this).attr('src', LIVELY.root_url + $(this).attr('src'));
+        }
+    });
     $('#broadcast .delete')
     var html = $('#broadcast').html();
     console.log("Sending HTML", html);
@@ -180,13 +192,26 @@ function enable_publisher() {
 }
 
 
+/** Handle the QUOTE form */
+function publisher_quote_keypress(e) {
+    if(e.which == 13) {
+        var val1 = $("#publisher_quote").val();
+        var val2 = $("#publisher_author").val();
+        publisher.json.emit('publish', {type: "quote",
+                                        quote: val1,
+                                        author: val2});
+        $('#publisher_quote, #publisher_author').val('');
+        $('#sent_message').html("Sending quote: " + val1 + " - " + val2);
+    }
+};
+
+/** Handle the straight text form */
 function publisher_text_keypress(e) {
     if(e.which == 13) {
         var val = $("#publisher_text").val();
         publisher.json.emit('publish', {type: "text", data: val});
-        console.log("emitting", val);
         $('#publisher_text').val('');
-        $('#sent_message').html("Sending message: " + val);
+        $('#sent_message').html("Sending quote: " + val);
     }
 };
 
@@ -311,16 +336,6 @@ $(document).ready(function(){
     }
 
 
-    /* Init buttons to enable publish and moderator */
-    $('.enable_publisher').click(function() {
-        enable_publisher();
-        return false;
-    });
-    $('.enable_moderator').click(function() {
-        enable_moderator();
-        return false;
-    });
-
     /* Map the KEEP buttons */
     $('#moderator').delegate('button.keep', 'click', function() {
         keep_snippet(this);
@@ -355,6 +370,8 @@ $(document).ready(function(){
     });
     // Publisher events
     $("#publisher_text").keypress(publisher_text_keypress);
+    $("#publisher_author, #publisher_quote").keypress(publisher_quote_keypress);
+    
 
 })
 

@@ -258,29 +258,6 @@ h1 {
     font-weight: bold;
 }
 
-#dropbox {
-	position: relative;
-	width: 250px;
-	height: 75px;
-	border: 2px solid #DDD;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
-	background-color: #EEE;
-	text-align: center;
-	color: #333;
-	font-size: 2em;
-	font-family: Arial, sans-serif;
-	top: -5px;
-}
-
-
-#droplabel {
-	position: relative;
-	top: 20%;
-}
-
-
-
 
 
 
@@ -301,13 +278,25 @@ h1 {
 	margin: 10px;	
 }
 
+.pubmode {
+  padding: 1.5ex 0;
+}
+
 #publisher #publisher_text {
-	border-radius: 10px;
-	height: 30px;
-	border: 1px solid #CCC;
-	width: 60%;
-	outline: 0;
-	padding: 10px;
+    width: 80%;
+}
+#publisher_text, #publisher_quote, #publisher_author {
+    outline: 0;
+    padding: 7px;
+    border: 1px solid #CCC;
+    height: 20px;
+    border-radius: 5px;
+}
+#publisher_quote {  
+    width: 60%;
+}
+#publisher_author {
+    width: 15.5%;
 }
 button.publish, button.keep {
   position: absolute;
@@ -322,6 +311,26 @@ button.publish, button.keep {
 
 
 
+#dropbox {
+	position: relative;
+	width: 250px;
+	height: 75px;
+	border: 2px solid #DDD;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	background-color: #EEE;
+	text-align: center;
+	color: #333;
+	font-size: 2em;
+	font-family: Arial, sans-serif;
+	top: -5px;
+}
+
+
+#droplabel {
+	position: relative;
+	top: 20%;
+}
 
 #publisher #dropbox {
 	display: inline-block;

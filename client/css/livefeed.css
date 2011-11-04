@@ -39,7 +39,7 @@
   text-align: center;
   font-size: small;
   color: #888;
-  padding: 25px 10px 25px;
+  padding: 25px 0px 0px;
 }
 
 
@@ -77,10 +77,11 @@
 
 #LIVELY-cnt .nugget .content-wrapper {
     display: inline-block;
-    margin:5px;
+    margin: 5px;
 }
 
-#LIVELY-cnt .nugget-text .text {
+#LIVELY-cnt .nugget-text .text,
+#LIVELY-cnt .nugget-comment .comment {
     display: inline-block;
     float: left;
     margin: 10px 2px;
@@ -162,33 +163,22 @@
 }
 
 
-#LIVELY-cnt .template_image_text {}
-#LIVELY-cnt .template_image_text .image {
+#LIVELY-cnt .template_image_text {
+  font-size: 100%;
+}
+#LIVELY-cnt .template_image_text .image,
+#LIVELY-cnt .template_image_two .image {
   width: 30%;
   padding: 7px;
+  vertical-align: top;
 }
-#LIVELY-cnt .template_image_text .image img {
+#LIVELY-cnt .template_image_text .image img,
+#LIVELY-cnt .template_image_two .image img {
   max-width: 100%;
   border: 5px solid #e8e8e8;
 }
 #LIVELY-cnt .template_image_text .text {
   width: 70%;
   padding-left: 15px;
-}
-
-
-
-/**
- * TEMPORARY ONLY
- */
-#LIVELY-cnt .enable_actions {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  text-align: right;
-  z-index: 100;
-}
-#LIVELY-cnt .enable_actions button {
-  margin: 2px;
-  display: block
+  vertical-align: middle;
 }

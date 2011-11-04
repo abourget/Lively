@@ -21,3 +21,14 @@ TODO: flag the content as USED when someone uses it in a broadcasted template, g
   CSS3 buttons
   HTML5 boilerplate (by Paul Irish)
   CSS Fonts
+  HTML5 drag'n'drop
+  ContentEditable
+  Monetize user-generated content
+
+
+Using the embed code will affect the JavaScript global environment in these ways:
+- Adds the LIVELY object to the global scope
+- Adds the io object to the global scope (until Socket.IO supports configuring the JSONP callback)
+- Adds a CSS file where all selectors are prefixed with #LIVELY-cnt
+- Loads jQuery as LIVELY.jQuery (calls $.noConflict(true) if you already use it)
+- Loads yepnope in the global scope (although that should change soon)

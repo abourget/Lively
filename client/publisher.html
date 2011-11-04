@@ -51,8 +51,19 @@
             
 
           <div class="content-wrapper">
-            <input type="text" id="publisher_text" />
-      	    <div id="dropbox"><span id="droplabel">Drop file here...</span></div>
+            <div class="pubmode pubmode_text">Straight text: &nbsp;
+              <input type="text" id="publisher_text" />
+            </div>
+            <div class="pubmode pubmode_file">Image (or video):
+      	      <div id="dropbox">
+                <span id="droplabel">Drop file here...</span>
+              </div>
+            </div>
+            <div class="pubmode pubmode_quote">Quote: &nbsp;
+              <input type="text" id="publisher_quote" />
+              &nbsp; and author:
+              <input type="text" id="publisher_author" />
+            </div>
           </div>
 
           <div id="sent_message"></div>
@@ -65,15 +76,17 @@
         <div id="moderator">
 
           <h1 style="text-align: center;">Moderator panel</h1>  
+
           <div id="live_trash">
             <h2>Live trash coming in...</h2>
             <!-- Ici va arriver TOUT le stock de tout le monde -->
-
           </div>
+
           <div id="nuggets">
             <h2>Good nuggets</h2>
-            <!-- Ici on va avoir les choses qu'on a sélectionné dans le trash -->
+            <!-- The good nuggets that we carefully select will be here. -->
           </div>
+
           <div id="templates">
             <!-- Ici on va avoir les templates, en phase 2, pour formatter l'output. -->
             <h3>Drag your templates from here:</h3>
@@ -81,15 +94,19 @@
               <li><div class="template_src" data-tplname="blockquote" draggable="true">Blockquoted text</div></li>
               <li><div class="template_src" data-tplname="twocol" draggable="true">A two columns layout</div></li>
               <li><div class="template_src" data-tplname="image_text" draggable="true">Image (left) and text (right)</div></li>
+              <li><div class="template_src" data-tplname="image_two" draggable="true">Images: two side by side</div></li>
             </ul>
           </div>
+
+
           <div id="broadcast">
             <!-- Ici, on va juste dropper ce qu'on veut publier et ça PART en live -->
             Drop your template here.
           </div>
+
           <div id="publish_button">
             <button class="button humonguous orange" accesskey="s">PUBLISH!</button>
-          </div
+          </div>
         </div>
     </div>
     <footer>
@@ -121,6 +138,15 @@
     </div>
   </script>
 
+  <script id="snippet_quote" type="text/html">
+    <div class="nugget nugget-quote">
+      <div class="content-wrapper">
+        <div class="text"><strong>{{ stamp }}</strong>: {{ quote }} -- {{ author }}</div>
+      </div>  
+    </div>
+  </script>
+
+
   <script id="snippet_comment" type="text/html">
     <div class="nugget nugget-comment">
       <div class="content-wrapper">
@@ -148,7 +174,7 @@
  
   <script id="template_blockquote" type="text/html">
     <div class="template template_blockquote">
-      <blockquote class="zone" data-type="text" data-bind="text_to_blockquote" contenteditable="true">Drop blockquote here</blockquote>
+      <blockquote class="zone" data-type="text" data-bind="quote_to_blockquote" contenteditable="true">Drop blockquote here</blockquote>
       <div class="quote1">‘</div>
       <div class="quote2">’</div>
       <div class="stamp"></div>
@@ -169,6 +195,15 @@
       <table><tr>
           <td class="zone image" data-type="img" data-bind="img_src_to_img"><img src="/img/sample-4.jpg" alt="Image here" title="Image here" /></td>
           <td class="zone text" data-type="text" data-bind="text_to_html" contenteditable="true">Drop text here.</td>
+      </tr></table>
+    </div>
+  </script>
+
+  <script id="template_image_two" type="text/html">
+    <div class="template template_image_two">
+      <table><tr>
+          <td class="zone image" data-type="img" data-bind="img_src_to_img"><img src="/img/sample-4.jpg" alt="Image here" title="Image here" /></td>
+          <td class="zone image" data-type="img" data-bind="img_src_to_img"><img src="/img/sample-4.jpg" alt="Image here" title="Image here" /></td>
       </tr></table>
     </div>
   </script>

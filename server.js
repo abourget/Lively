@@ -70,6 +70,7 @@ function Server() {
             console.log("New COMMENT", data);
             // Just stack anything AS IS
             data.type = 'comment';
+            data.stamp = (new Date()).toDateString();            
             write_queue.publish('new_trash', JSON.stringify(data));
         });
         socket.on('disconnect', function() {
@@ -159,8 +160,7 @@ function Server() {
                 // Push an 'img_src' message instead
                 data.src = path;
             }
-            var now = new Date();
-            data.stamp = now.toDateString();
+            data.stamp = (new Date()).toDateString();
 
             write_queue.publish('new_trash', JSON.stringify(data));
         });
