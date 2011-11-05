@@ -1,0 +1,23 @@
+Les fonts qui sont pas mal pour ce que je veux, sur Google Web Fonts:
+
+* Salsa
+* Rancho
+* Alice
+
+J'voudrais idéalement une bulle de parole, quelque chose qui montre le real-time, quelque chose de vivant ?  Une feuille avec un dégradé, une goutte d'eau dessus ?  Quelque chose qui pourrait aisément se décliner en Icône pour les applications, et qui conserverait un trait caractéristique du logo ?
+
+Idées dans les images:
+famous-logos.jpg:
+  - les feuilles de NIKE, les couleurs de CITI
+logo4.jpg:
+  - la vigueur de PicPix
+  - les feuilles de 9rules
+logo_images.jpg:
+  - les feuilles du milieu :) le font des deux premiers ?
+logosencore.gif:
+  - simplicité de wink, boldness
+  - le punch du bleuté de OYOGI et YEDDA et le boldness
+speechbubblelogos.jpg:
+  - la bulle simple de BubblePLY
+  - l'intégration de la bulle de "Ohmy buzz!" (en fait, ce Ohmy buzz a pas mal tout ce que je veux, boldness, couleur, Ohmy => Live, buzz => ly!, Live en bleu, Ly en blanc dans une bulle verte (avec le '!' si on a besoin de plus d'espace), en font super bold, super roundy.
+
