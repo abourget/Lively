@@ -3,6 +3,10 @@ Les fonts qui sont pas mal pour ce que je veux, sur Google Web Fonts:
 * Salsa
 * Rancho
 * Alice
+* Irish Grover
+* Chewy
+* Sniglet
+* Terminal Dosis (pas mal ça !)
 
 J'voudrais idéalement une bulle de parole, quelque chose qui montre le real-time, quelque chose de vivant ?  Une feuille avec un dégradé, une goutte d'eau dessus ?  Quelque chose qui pourrait aisément se décliner en Icône pour les applications, et qui conserverait un trait caractéristique du logo ?
 
