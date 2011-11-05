@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta name="viewport" content="width=320; user-scalable=no" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Lively</title>
+	  <link rel="stylesheet" href="master.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	  <script type="text/javascript" charset="utf-8" src="phonegap-1.1.0.js"></script>
+	  <script type="text/javascript" charset="utf-8" src="main.js?v=3"></script>
+
+  </head>
+  <body onload="init();" id="stage" class="theme">
+    <h1>Lively Mobile Publish</h1>
+
+    <div id="loading">
+      Loading ...
+    </div>
+
+    <div id="nodevice" style="display: none;">
+      <h4>This page is only useful to Mobile Apps</h4>
+    </div>
+
+    <div id="ready" style="display: none;">
+      <a href="#" class="btn large" onclick="take_pic();">Take a snapshot</a>
+      <a href="#" class="btn large" onclick="select_pic();">Choose a picture from Gallery</a>
+    </div>
+
+    <form id="image_submit_form" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="type" value="image_content" />
+      <input type="hidden" name="livefeed" value="japan2011" />
+      <input type="hidden" id="image_submit_content" name="image_content" value="" />
+    </form>
+
+  </body>
+</html>

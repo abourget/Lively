@@ -305,10 +305,62 @@ button.publish, button.keep {
   z-index: 5;
 }
 
+
+
+
+
+
+
+/**
+ * Nugget styles, for each data type
+ * These are used for new_nugget and new_trash elements.
+ */
+
+
+#LIVELY-cnt .nugget {
+    background-image: linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+    background-image: -o-linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+    background-image: -moz-linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+    background-image: -webkit-linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+    background-image: -ms-linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+
+    background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.46, rgb(237,237,237)),
+	color-stop(0.87, rgb(245,245,245))
+);
+    
+    width:100%;    
+    border-top: 1px #FFF solid;
+    border-bottom: 1px #CCC solid;
+    margin: 0px;
+    display: inline-block;    
+    position: relative;
+    z-index: 0;
+}
+
+.nugget .content-wrapper {
+    display: inline-block;
+    margin: 5px;
+}
+
+.nugget-text .text,
+.nugget-comment .comment {
+    display: inline-block;
+    float: left;
+    margin: 10px 2px;
+}
+
+
 .moderator_wrapper, .nugget_wrapper {
   position: relative;
 }
 
+.nugget-img-src img {
+  max-width: 70%;
+}
 
 
 #dropbox {

@@ -32,3 +32,5 @@ Using the embed code will affect the JavaScript global environment in these ways
 - Adds a CSS file where all selectors are prefixed with #LIVELY-cnt
 - Loads jQuery as LIVELY.jQuery (calls $.noConflict(true) if you already use it)
 - Loads yepnope in the global scope (although that should change soon)
+
+

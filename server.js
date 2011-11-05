@@ -25,8 +25,7 @@ var mime = require('mime');
 var sys = require('sys');
 var redis = require('redis');
 var uuid = require('node-uuid');
-
-//var formidable = require('formidable');
+var formidable = require('formidable');
 var sio = require('socket.io');
 
 // Server global defaults.
@@ -48,6 +47,7 @@ function Server() {
 
     var io = sio.listen(this.server);
     io.set('log level', 1);
+    io.set('transports', ['jsonp-polling']);
 
     // Global state.
     var users = {};
@@ -135,27 +135,9 @@ function Server() {
             // Send something to the ADMIN queues
             if (data.type == 'img') {
                 // Save the img to disk
-                var type_data = data.data.split(';');
-                var mime_type = type_data[0].split(':')[1];
-                var base64_data = type_data[1].split(',')[1];
-                var this_uuid = uuid();
-                if (mime_type == 'image/jpeg') {
-                    ext = ".jpg";
-                } else if (mime_type == 'image/png') {
-                    ext = ".png";
-                } else if (mime_type == 'image/gif') {
-                    ext = ".gif";
-                }
-                var path = '/images/' + this_uuid + ext
-                var filename = __dirname + '/client' + path;
-                var decoded = new Buffer(base64_data, 'base64');
-                fs.writeFile(filename, decoded, function(err) {
-                    if (!err) { console.log("File saved"); }
-                    else { console.log("Ouch, file not saved"); }
-                });
-
-                delete data.data;
+                var path = self.saveUploadedImage(data.data);
                 // Replace the message with the LINK to the image
+                delete data.data;
                 data.type = 'img_src';
                 // Push an 'img_src' message instead
                 data.src = path;
@@ -179,6 +161,7 @@ const TMP_FOLDER = 'tmp'; // Move into prototype
 Server.prototype = {
 
     onRequest: function(req, res) {
+        var self = this;
         var path = this.getPath(req.url);
         var ext = this.getFileExtension(path);
 
@@ -196,8 +179,30 @@ Server.prototype = {
             //this.sendFile(res, __dirname + '/../index.html', '.html');
             this.sendFile(res, __dirname + '/client/index.html', '.html');
             break;
-        case '/chat.html':
-            this.sendFile(res, __dirname + '/client/chat.html', '.html');
+        case '/mobile/publisher.html':
+            if (req.method.toLowerCase() == 'post') {
+                var form = new formidable.IncomingForm();
+                form.parse(req, function(err, fields, files) {
+                    //res.writeHead(200, {'content-type': 'text/plain'});
+                    //res.write('received upload:\n\n');
+                    //res.end(sys.inspect({fields: fields, files: files}));
+                    //return;
+                    var imgpath = self.saveUploadedImage(fields.image_content);
+                    var newdata = {stamp: (new Date()).toDateString(),
+                                   type: "img_src",
+                                   src: imgpath};
+                    // Push to queue
+                    var write_queue = redis.createClient();
+                    write_queue.publish('new_trash', JSON.stringify(newdata));
+                    write_queue.quit();
+                    // Show the same file.
+                    self.sendFile(res, __dirname + '/client/mobile/publisher.html',
+                                  '.html');
+                });
+                return;
+            }
+            this.sendFile(res, __dirname + '/client/mobile/publisher.html',
+                          '.html');
             break;
         case '/proxy':
             this.proxy(req, res);
@@ -350,6 +355,29 @@ Server.prototype = {
         if (path.lastIndexOf('/') == path.length - 1) {
             path += 'index.html';
         }
+        return path;
+    },
+
+    saveUploadedImage : function(data) {
+        // Save the img to disk
+        var type_data = data.split(';');
+        var mime_type = type_data[0].split(':')[1];
+        var base64_data = type_data[1].split(',')[1];
+        var this_uuid = uuid();
+        if (mime_type == 'image/jpeg') {
+            ext = ".jpg";
+        } else if (mime_type == 'image/png') {
+            ext = ".png";
+        } else if (mime_type == 'image/gif') {
+            ext = ".gif";
+        }
+        var path = '/images/' + this_uuid + ext
+        var filename = __dirname + '/client' + path;
+        var decoded = new Buffer(base64_data, 'base64');
+        fs.writeFile(filename, decoded, function(err) {
+            if (!err) { console.log("File saved"); }
+            else { console.log("Ouch, file not saved"); }
+        });
         return path;
     }
 };
