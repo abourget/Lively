@@ -183,6 +183,8 @@ Server.prototype = {
             if (req.method.toLowerCase() == 'post') {
                 var form = new formidable.IncomingForm();
                 form.parse(req, function(err, fields, files) {
+                    // TODO: Verify the POST type.. 
+                    // TODO: standardize with the publisher's interface
                     //res.writeHead(200, {'content-type': 'text/plain'});
                     //res.write('received upload:\n\n');
                     //res.end(sys.inspect({fields: fields, files: files}));
@@ -196,8 +198,9 @@ Server.prototype = {
                     write_queue.publish('new_trash', JSON.stringify(newdata));
                     write_queue.quit();
                     // Show the same file.
-                    self.sendFile(res, __dirname + '/client/mobile/publisher.html',
-                                  '.html');
+                    // Redirect to the REFERER URL.
+                    res.writeHead(302, {'location': req.headers.referer});
+                    res.end("back to form");
                 });
                 return;
             }
