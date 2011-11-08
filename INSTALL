@@ -6,6 +6,7 @@ npm install redis
 npm install mime
 npm install node-uuid
 npm install formidable
+npm install express
 
 
 
