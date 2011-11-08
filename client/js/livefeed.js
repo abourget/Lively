@@ -15,7 +15,7 @@ LIVELY.init = function($) { /* start module */
         if(e.which == 13) {
             var val = $("#commenter_text").val();
             livefeed.json.emit('comment', {data: val});
-            console.log("emitting", val);
+            //console.log("emitting", val);
             $('#commenter_text').val('');
             $('#commenter_message').html("Sending message: " + val);
         }
@@ -44,7 +44,7 @@ LIVELY.init = function($) { /* start module */
 
         // Define socket events
         livefeed.on('new_item', function(data) {
-            console.log("New item", data);
+            //console.log("New item", data);
             var el = $('#LIVELY-feed').prepend($(data.html));
         });
 

@@ -72,35 +72,49 @@ function getDataTransfer(ev) {
     return {};
 }
 
-var binding_functions = {
+var binding_functions = function() {
     // zone here is the dropping zone, so an element which receives the data
     // data is the data object as transited from the beginning of the "publish"
     // in the new_trash box.
-    text_to_html: function(zone, data) {
+
+    /** to_html filters */
+    this.text_to_html =  function(zone, data) {
         $(zone).html(data.data);
-    },
-    quote_to_blockquote: function(zone, data) {
-        if (data.type == 'quote') {
-            $(zone).html(data.quote + ' &mdash; ' + data.author);
-        } else if (data.type == 'text') {
-            $(zone).html(data.data);
-        } else if (data.type == 'comment') {
-            $(zone).html(data.data);
-        }
-        
+    }
+    this.comment_to_html = this.text_to_html;
+    this.quote_to_html = function(zone, data) {
+        $(zone).html(data.quote);
+    }
+
+    /** to_blockquote filters */
+    function _to_blockquote_put_stamp(zone, data) {
         var stamp = $(zone).parent().find('.stamp');
         stamp.html(data.stamp);
         stamp.attr('contenteditable', "true");
-    },
-    text_to_value: function(zone, data) {
-        $(zone).val(data.data);
-    },
-    img_src_to_img: function(zone, data) {
-        if (data.type == 'img_src') {
-            $('img', zone).attr('src', data.src);
-        }
     }
-};
+    this.quote_to_blockquote = function(zone, data) {
+        $(zone).html(data.quote + ' &mdash; ' + data.author);
+        _to_blockquote_put_stamp(zone, data);
+    }
+    this.text_to_blockquote = function(zone, data) {
+        $(zone).html(data.data);
+        _to_blockquote_put_stamp(zone, data);
+    }
+    this.comment_to_blockquote = this.text_to_blockquote;
+
+    /** to_value filters */
+    this.text_to_value = function(zone, data) {
+        $(zone).val(data.data);
+    }
+    this.comment_to_value = this.text_to_value;
+
+    /** to_img filters */
+    this.img_src_to_img = function(zone, data) {
+        $('img', zone).attr('src', data.src);
+    }
+
+    return this;
+}();
 
 
 function set_bindings_broadcaster() {
@@ -117,7 +131,14 @@ function set_bindings_broadcaster() {
             }
   
             // Call a binding functions attached via "data-bind='text_to_html'"
-            binding_functions[$(src).data('bind')](src, data.cnt);
+            var droppable_type = data.cnt.type;
+            var bind_suffix = $(src).data('bind');
+            var bind_func = droppable_type + '_' + bind_suffix;
+            if (binding_functions[bind_func] === undefined) {
+                alert("Cannot drop nugget type: " + droppable_type + " onto droppable zone, using the " + bind_suffix + " functions (" + bind_func + ')');
+            } else {
+                binding_functions[bind_func](src, data.cnt);
+            }
 
             remove_over_class('nugget')(e);
 

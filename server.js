@@ -27,6 +27,7 @@ var redis = require('redis');
 var uuid = require('node-uuid');
 var formidable = require('formidable');
 var sio = require('socket.io');
+var child_process = require('child_process');
 
 // Server global defaults.
 var host = '0.0.0.0';
@@ -48,12 +49,15 @@ function Server() {
     var io = sio.listen(this.server);
     io.set('log level', 1);
     io.set('transports', ['jsonp-polling']);
+    io.set('authorization', function(handshakeData, callback) {
+        callback(null, true);
+    });
 
     // Global state.
     var users = {};
 
     var livefeed = io.of('/livefeed').on('connection', function(socket) {
-        console.log("LIVE FEED user logged in");
+        console.log("LIVE FEED user logged in", arguments);
 
         // Redis client...
         var read_queue = redis.createClient();
@@ -67,10 +71,10 @@ function Server() {
         read_queue.subscribe('public');
 
         socket.on('comment', function(data) {
-            console.log("New COMMENT", data);
-            // Just stack anything AS IS
+            console.log("New COMMENT in:", data);
             data.type = 'comment';
             data.stamp = (new Date()).toDateString();            
+            // received data.data as the text.
             write_queue.publish('new_trash', JSON.stringify(data));
         });
         socket.on('disconnect', function() {
@@ -135,12 +139,11 @@ function Server() {
             // Send something to the ADMIN queues
             if (data.type == 'img') {
                 // Save the img to disk
-                var path = self.saveUploadedImage(data.data);
+                var saved = self.saveUploadedImage(data.data);
+                var newdata = saved.data
+                var absfile = saved.absfile
                 // Replace the message with the LINK to the image
-                delete data.data;
-                data.type = 'img_src';
-                // Push an 'img_src' message instead
-                data.src = path;
+                data = newdata;
             }
             data.stamp = (new Date()).toDateString();
 
@@ -189,18 +192,21 @@ Server.prototype = {
                     //res.write('received upload:\n\n');
                     //res.end(sys.inspect({fields: fields, files: files}));
                     //return;
-                    var imgpath = self.saveUploadedImage(fields.image_content);
-                    var newdata = {stamp: (new Date()).toDateString(),
-                                   type: "img_src",
-                                   src: imgpath};
-                    // Push to queue
-                    var write_queue = redis.createClient();
-                    write_queue.publish('new_trash', JSON.stringify(newdata));
-                    write_queue.quit();
-                    // Show the same file.
-                    // Redirect to the REFERER URL.
-                    res.writeHead(302, {'location': req.headers.referer});
-                    res.end("back to form");
+                    var saved = self.saveUploadedImage(fields.image_content);
+                    var newdata = saved.data;
+                    var absfile = saved.absfile;
+                    var done = function() {
+                        // Push to queue
+                        var write_queue = redis.createClient();
+                        write_queue.publish('new_trash', JSON.stringify(newdata));
+                        write_queue.quit();
+                        // Show the same file.
+                        // Redirect to the REFERER URL.
+                        res.writeHead(302, {location: req.headers.referer});
+                        res.end("back to form");
+                    };
+                    child_process.exec("jhead -autorot " + absfile + "; ");
+
                 });
                 return;
             }
@@ -295,6 +301,7 @@ Server.prototype = {
 
 
     sendFile : function(res, path, ext) {
+        console.log("Serving file", path);
         var self = this;
         var contenttype = mime.lookup(ext);
 
@@ -361,6 +368,11 @@ Server.prototype = {
         return path;
     },
 
+    filterImage : function(imgpath, callback) {
+        var absfile = __dirname + '/client' + imgpath;
+        child_process.exec("jhead -autorot " + absfile + "; ");
+    },
+
     saveUploadedImage : function(data) {
         // Save the img to disk
         var type_data = data.split(';');
@@ -381,7 +393,13 @@ Server.prototype = {
             if (!err) { console.log("File saved"); }
             else { console.log("Ouch, file not saved"); }
         });
-        return path;
+
+        var newdata = {type: "img_src",
+                       src: path,
+                       large_src: large_path};
+        var absfile = filename;
+
+        return {data: newdata, absfile: absfile}
     }
 };
 
