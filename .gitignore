@@ -9,7 +9,7 @@ npm-debug.log
 
 # Uploaded images.
 nodeapp/client/images
-
+nodeapp/client/styl/*css
 # From the Android app
 local.properties
 

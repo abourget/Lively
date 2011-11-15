@@ -1,4 +1,5 @@
 var mongooseAuth = require('mongoose-auth');
+var stylus = require('stylus');
 
 /**
  * Default configuration manager
@@ -13,6 +14,17 @@ module.exports = function(app,express) {
     app.use(express.cookieParser());
     app.use(express.session({secret: "super bob"}));
     //app.use(mongooseAuth.middleware());
+    app.use(stylus.middleware({
+        src: __dirname + '/../views'
+        , dest: __dirname + '/../client'
+        , debug: true
+        , compile: function(str, path) { // optional, but recommended
+	    return stylus(str)
+		.set('filename', path)
+		.set('warn', true)
+		.set('compress', true);
+	}
+    }));
     app.use(express.static(__dirname + '/../client'));
 		
     // DEVELOPMENT

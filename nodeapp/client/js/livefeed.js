@@ -73,5 +73,5 @@ yepnope([
 
          LIVELY.init(LIVELY.jQuery);
      }},
-    {load: LIVELY.root_url + "/css/livefeed.css"}
+    {load: LIVELY.root_url + "/styl/livefeed.css"}
 ]);

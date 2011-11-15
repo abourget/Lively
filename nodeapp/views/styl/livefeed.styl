@@ -1,0 +1,126 @@
+/**
+ * Embedded styles for the Live feed
+ */
+
+#LIVELY-cnt
+  .LIVELY-commentbox
+    padding: 0.8ex;
+    span
+      padding-right: 1em;
+      font-size: 120%;
+      font-weight: bold;
+
+    small
+      font-size: 80%;
+      color: #666;
+      padding: 1ex;
+    input
+      border-radius: 10px;
+      height: 3ex;
+      font-size: 120%;
+      border: 1px solid #CCC;
+      width: 70%;
+      outline: 0;
+      padding: 10px;
+
+  h2
+    color:#666;
+    border-bottom: 1px solid #999;
+    line-height:13px;
+    font-size: 20px;
+    text-transform: uppercase;
+    padding-left: 5px;
+    margin-top: 20px;
+    font-weight: bold;
+
+  .LIVELY-footer
+    text-align: center;
+    font-size: small;
+    color: #888;
+    padding: 25px 0px 0px;
+
+
+/**
+ * Styles for TEMPLATES (that are drag'n'droppable) which constitute
+ * the elements that will be send to ALL participants
+ */
+#LIVELY-cnt
+  /* Generic template */
+  .template
+    background-image: linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+    background-image: -o-linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+    background-image: -moz-linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+    background-image: -webkit-linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+    background-image: -ms-linear-gradient(bottom, rgb(237,237,237) 46%, rgb(245,245,245) 87%);
+
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.46, rgb(237,237,237)), color-stop(0.87, rgb(245,245,245)));
+    
+    width:100%;    
+    border-top: 1px #FFF solid;
+    border-bottom: 1px #CCC solid;
+    margin: 0px;
+    display: inline-block;    
+    position: relative;
+    z-index: 0;
+
+
+  /* Block quote template */
+  .template_blockquote
+    font-size: 20px;
+    color: #777;
+    position: relative;
+
+    .quote1, .quote2
+      font-family: 'Arial', arial;
+      font-size: 150px;
+      color: #CCC;
+      position: absolute;
+      top: -20px;
+      left: 0px;
+      display: block;
+    .quote2
+      top: -20px;
+      right: 20px;
+      left: auto;
+
+    .stamp
+      font-size: 60%;
+      text-align: right;
+      padding-left: 1em;
+      padding-bottom: 1em;
+
+  /* Two columns template */
+  .template_twocol table
+    margin: 0;
+    width: 100%;
+
+    .td1, .td2
+      width: 42%;
+      text-align: right;
+      border-right: 1px solid #CCC;
+      padding: 2%;
+
+    .td2
+      text-align: left;
+
+  /* Image with text template */
+  .template_image_text
+    font-size: 100%;
+
+    .text
+      width: 70%;
+      padding-left: 15px;
+      vertical-align: middle;
+
+  /* Mixin for two-images template */
+  .template_image_text .image,
+  .template_image_two .image
+    width: 30%;
+    padding: 7px;
+    vertical-align: top;
+
+  .template_image_text .image img,
+  .template_image_two .image img
+    max-width: 100%;
+    border: 5px solid #e8e8e8;
+
