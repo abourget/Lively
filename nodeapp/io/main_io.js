@@ -1,5 +1,11 @@
 var redis = require('redis');
-
+var mongoose = require('mongoose');
+var ObjectId = mongoose.Types.ObjectId;
+// load models
+var User = mongoose.model('User');
+var Event = mongoose.model('Event');
+var Livefeed = mongoose.model('Livefeed');
+var Nugget = mongoose.model('Nugget');
 
 module.exports = function(io) {
 
@@ -11,6 +17,13 @@ module.exports = function(io) {
 
     var livefeed = io.of('/livefeed').on('connection', function(socket) {
         console.log("LIVE FEED user logged in");
+
+        // pushing latest HTML snippets
+        Livefeed.find({event: "japan2011"}, function(err, docs) {
+            docs.forEach(function(el) {
+                socket.json.emit("new_item", {type: "html", html: el.html});
+            });
+        });
 
         // Redis client...
         var read_queue = redis.createClient();
@@ -65,6 +78,9 @@ module.exports = function(io) {
         socket.on('broadcast', function(html) {
             // Send something to the 'public' queue
             console.log("html data", html);
+            var lf = new Livefeed({html: html, event: "japan2011",
+                                   editor: new ObjectId("123123123123")});
+            lf.save();
             write_queue.publish('public', html);
         });
         

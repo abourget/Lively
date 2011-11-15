@@ -1,3 +1,4 @@
+var mongooseAuth = require('mongoose-auth');
 
 /**
  * Default configuration manager
@@ -11,7 +12,7 @@ module.exports = function(app,express) {
     app.use(express.bodyParser());
     app.use(express.cookieParser());
     app.use(express.session({secret: "super bob"}));
-    app.use(app.router);
+    //app.use(mongooseAuth.middleware());
     app.use(express.static(__dirname + '/../client'));
 		
     // DEVELOPMENT
@@ -30,5 +31,8 @@ module.exports = function(app,express) {
     app.configure('test', function() {
 	require("./test.js")(app,express);
     });    
-    
+
+    // Add the helpers, as per: https://github.com/bnoguchi/mongoose-auth
+    //mongooseAuth.helpExpress(app);
+
 }

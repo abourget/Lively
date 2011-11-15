@@ -7,6 +7,13 @@ npm install mime
 npm install node-uuid
 npm install formidable
 npm install express
+npm install stache
+npm install mongodb
+npm install mongoose
+npm install stylus
+npm install mongoose-auth
+npm install everyauth
+
 
 
 

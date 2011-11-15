@@ -48,6 +48,14 @@ module.exports = function(app) {
         });
     });
 
+    app.get('/mytest', function(req, res) {
+        var u = new User();
+        u.set('lastname', 'Bourget').set('firstname', 'Alexandre')
+            .set('email', 'alex@bourget.cc');
+        u.save();
+        res.render('thanks.html', {thanks: 'ok'});
+    });
+
     app.post('/mobile/publisher.html', function(req, res) {
         var form = new formidable.IncomingForm();
         form.parse(req, function(err, fields, files) {
