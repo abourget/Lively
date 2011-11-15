@@ -165,7 +165,7 @@ io.set('authorization', function(handshakeData, callback) {
 });
 
 var livefeed = io.of('/livefeed').on('connection', function(socket) {
-    console.log("LIVE FEED user logged in", arguments);
+    console.log("LIVE FEED user logged in");
 
     // Redis client...
     var read_queue = redis.createClient();
