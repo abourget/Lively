@@ -8,7 +8,7 @@ pip-log.txt
 npm-debug.log
 
 # Uploaded images.
-client/images
+nodeapp/client/images
 
 # From the Android app
 local.properties
