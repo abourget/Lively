@@ -2,7 +2,9 @@ var formidable = require('formidable');
 var uuid = require('node-uuid');
 var fs = require('fs');
 var child_process = require('child_process');
-//var sys = require('util');
+var mongoose = require('mongoose')
+// Load models
+var User = mongoose.model('User');
 
 
 function saveUploadedImage(data) {

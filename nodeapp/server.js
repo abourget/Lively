@@ -33,11 +33,13 @@ mime.define({
     'text/cache-manifest': ['.appcache', '.mf'] // Appcache manifest file.
 });
 
-// Load the main controller code
-require(__dirname + '/controllers/main.js')(app);
-
 // Connect to mongoose
 mongoose.connect(app.set('db-uri'));
+require(__dirname + '/models/models.js');
+
+
+// Load the main controller code
+require(__dirname + '/controllers/main.js')(app);
 
 // Start the server
 var host = '0.0.0.0';
