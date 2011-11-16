@@ -5,10 +5,13 @@ var LIVELY = LIVELY || {};
 if (LIVELY.root_url === undefined) {
     LIVELY.root_url = 'http://lively.abourget.net';
 }
+if (LIVELY.feed_name === undefined) {
+    LIVELY.feed_name = '';
+}
 
 (function($) { /* start module */
 
-
+var feedname = LIVELY.feed_name;
 
 var dropbox;
 var moderator, publisher;
@@ -283,9 +286,9 @@ function handleReaderLoadEnd(evt) {
 $(document).ready(function(){
     
     // TODO: put this in enable_moderator()
-    moderator = io.connect('/moderator');
+    moderator = io.connect('/moderator?feedname=' + feedname);
     // TODO: put this in enable publisher()
-    publisher = io.connect('/publisher');
+    publisher = io.connect('/publisher?feedname=' + feedname);
 
     // TODO: put this in the enable_moderator() code
     moderator.on('new_trash', function(data) {
@@ -301,7 +304,7 @@ $(document).ready(function(){
         console.log("New nugget", data);
         var inner_tpl = ich['snippet_' + data.type](data);
         var tpl = ich.nugget_wrapper({inner_tpl: inner_tpl.outerHTML(),
-                                              data: data});
+                                      data: data});
         $(tpl, '.datanode').data('data', data);
         var el = $('#nuggets').append(tpl);
         attach_nugget_dnd(tpl[0], data);

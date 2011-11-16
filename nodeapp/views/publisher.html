@@ -39,16 +39,15 @@
 <body>
   <div id="LIVELY-cnt">
     <header>
-      <img src="/img/lively-logo.png" style="float: right; padding: 10px 25px;" />
+      <img src="/img/lively-logo-v2.png" style="float: right; padding: 10px 25px;" />
       <h1>Lively control panel</h1>
     </header>
-    
-    
+
     <div id="main" role="main">
 	
         <div id="publisher">
         <!-- Ici on va avoir les contrôles pour ENVOYER des choses -->
-          <h2 style="width: 80%">Publisher</h2>
+          <h2 style="width: 80%">Publisher for {{#event}}{{name}}{{/event}}</h2>
             
 
           <div class="content-wrapper">
@@ -115,6 +114,10 @@
     </footer>
   </div> <!--! end of #container -->
     
+
+{{! Tell mustache to NOT interprete those templates, that must go DIRECTLY to the client }}
+{{=<% %>=}}
+
   <!-- Template snippets -->
   <script id="moderator_wrapper" type="text/html">
     <div class="moderator_wrapper datanode" draggable="true">
@@ -210,6 +213,10 @@
   </script>
 
 
+<%={{ }}=%>
+{{! Ok, reset the default behavior for Mustache }}
+
+
   <!-- JavaScript at the bottom for fast page loading -->
 
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
@@ -221,6 +228,11 @@
   <script src="/js/mylibs/ICanHaz.min.js"></script>
   <script defer src="/js/plugins.js"></script>
   <script defer src="/js/mylibs/jquery.event.drag-2.0.min.js"></script>
+
+  <script>
+    var LIVELY = LIVELY || {};
+    LIVELY.feed_name = '{{#event}}{{_id}}{{/event}}';
+  </script>
   <script defer src="/js/publisher.js"></script>
   <!-- end scripts-->
 

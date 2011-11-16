@@ -3,8 +3,10 @@ var uuid = require('node-uuid');
 var fs = require('fs');
 var child_process = require('child_process');
 var mongoose = require('mongoose')
+var ObjectId = mongoose.Types.ObjectId;
 // Load models
 var User = mongoose.model('User');
+var Event = mongoose.model('Event');
 
 
 function saveUploadedImage(data) {
@@ -37,6 +39,22 @@ function saveUploadedImage(data) {
 };
 
 
+/**
+ * This function ensures the event exists, is valid, and that the user has
+ * certain rights for administration or publishing
+ */
+function ensureEvent(event_param, permission) {
+    function eventFilterMiddleware(req, res, next) {
+        var ev = Event.findOne({_id: req.params[event_param]}, function(err, data) {
+            if (err) { next(new Error("No such event")); }
+            req.event = data;
+            console.log(data);
+            next()
+        });
+    };
+    return eventFilterMiddleware;
+}
+
 
 
 module.exports = function(app) {
@@ -48,11 +66,22 @@ module.exports = function(app) {
         });
     });
 
+    app.get('/publisher/:event_id', ensureEvent('event_id', 'publish'), function(req, res, next) {
+        res.render("publisher.html", {locals: {event: req.event},
+                                      layout: false});
+    });
+
     app.get('/mytest', function(req, res) {
-        var u = new User();
-        u.set('lastname', 'Bourget').set('firstname', 'Alexandre')
-            .set('email', 'alex@bourget.cc');
-        u.save();
+        //var u = new User();
+        //u.set('lastname', 'Bourget').set('firstname', 'Alexandre')
+        //    .set('email', 'alex@bourget.cc');
+        //u.save();
+        var e = new Event();
+        e.set('name', 'Japan earthquakes 2011')
+            .set('creator', new ObjectId("123123123123"))
+            .set('created_at', new Date())
+            .set('_id', 'japan2011');
+        e.save()
         res.render('thanks.html', {thanks: 'ok'});
     });
 

@@ -18,6 +18,7 @@ var User = new Schema({
 
 var Event = new Schema({
     // use _id as the primary key, but not an ObjectId
+    _id: String,
     name: {type: String, required: true},
     creator: {type: ObjectId},
     created_on: Date

@@ -10,7 +10,11 @@ TODO
 
 * Server-side SAVE of a session
 ** Store in a Redis list ?
+** MongoDB Livefeed collection
 
 * Rework l'interface, faire quelques mock-ups ?
 ** Avoir deux panneaux  ?  Un nombre de panneaux X ?  Donner un nom à chaque panneau pour filtrer..
 
+* Permettre à un user de se connecter
+
+* Permettre de créer un nouvel événement

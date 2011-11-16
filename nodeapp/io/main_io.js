@@ -11,15 +11,29 @@ module.exports = function(io) {
 
     io.set('log level', 1);
     io.set('transports', ['jsonp-polling']);
-    io.set('authorization', function(handshakeData, callback) {
-        callback(null, true);
+    io.set('authorization', function(data, accept) {
+        // At least makes sure the event exists, we'll authenticate truly
+        // a bit later (TODO)
+        console.log("SocketIO handshake data", data);
+        if (!data.query.feedname) {
+            accept("No feedname specified", false);
+            return;
+        }
+        // Look-up the Event, authenticate, etc..
+        Event.findOne({_id: data.query.feedname}, function(err, data) {
+            if (err || !data) { accept("No such event", false); }
+            else { accept(null, true); }
+        });
     });
 
     var livefeed = io.of('/livefeed').on('connection', function(socket) {
+        var feedname = socket.handshake.query.feedname;
+        var trash_chan = 'new_trash-' + feedname;
+        var public_chan = 'public-' + feedname;
         console.log("LIVE FEED user logged in");
 
         // pushing latest HTML snippets
-        Livefeed.find({event: "japan2011"}, function(err, docs) {
+        Livefeed.find({event: feedname}, function(err, docs) {
             docs.forEach(function(el) {
                 socket.json.emit("new_item", {type: "html", html: el.html});
             });
@@ -34,14 +48,14 @@ module.exports = function(io) {
             socket.json.emit("new_item", {type: "html", html: msg});
         });
         // Register to the REDIS queue 'public'
-        read_queue.subscribe('public');
+        read_queue.subscribe(public_chan);
         
         socket.on('comment', function(data) {
             console.log("New COMMENT in:", data);
             data.type = 'comment';
             data.stamp = (new Date()).toDateString();            
             // received data.data as the text.
-            write_queue.publish('new_trash', JSON.stringify(data));
+            write_queue.publish(trash_chan, JSON.stringify(data));
         });
         socket.on('disconnect', function() {
             console.log("livefeed disconnected");
@@ -51,6 +65,11 @@ module.exports = function(io) {
         });
     });
     var moderator = io.of('/moderator').on('connection', function(socket) {
+        var feedname = socket.handshake.query.feedname;
+        var trash_chan = 'new_trash-' + feedname;
+        var nugget_chan = 'new_nugget-' + feedname;
+        var public_chan = 'public-' + feedname;
+
         // Functions called by the moderators
         console.log("Moderator logged in");
         // Redis client...
@@ -62,32 +81,33 @@ module.exports = function(io) {
         read_queue.on('message', function(channel, msg) {
             var msg = JSON.parse(msg);
             // Send to the admin's browser
-            console.log("Got msg on internal queues", channel, msg);
-            if (channel == 'new_trash') {
+            console.log("Got msg on internal queues", channel, msg, trash_chan, nugget_chan);
+            if (channel == trash_chan) {
                 // Broadcast to clients
+                console.log("Sending a new_trash");
                 socket.json.emit("new_trash", msg);
-            } else if (channel == 'new_nugget') {
+            } else if (channel == nugget_chan) {
                 // Broadcast to clients
                 socket.json.emit("new_nugget", msg);
             }
         });
         // Register to the REDIS queue 'public'
-        read_queue.subscribe('new_trash');
-        read_queue.subscribe('new_nugget');
+        read_queue.subscribe(trash_chan);
+        read_queue.subscribe(nugget_chan);
         
         socket.on('broadcast', function(html) {
             // Send something to the 'public' queue
             console.log("html data", html);
-            var lf = new Livefeed({html: html, event: "japan2011",
+            var lf = new Livefeed({html: html, event: feedname,
                                    editor: new ObjectId("123123123123")});
             lf.save();
-            write_queue.publish('public', html);
+            write_queue.publish(public_chan, html);
         });
         
         socket.on('new_nugget', function(data) {
             console.log("new nugget", data);
             // Just stack anything AS IS
-            write_queue.publish('new_nugget', JSON.stringify(data));
+            write_queue.publish('new_nugget-' + feedname, JSON.stringify(data));
         });
         
         socket.on('disconnect', function() {
@@ -99,6 +119,9 @@ module.exports = function(io) {
     });
 
     var publisher = io.of('/publisher').on('connection', function(socket) {
+        var feedname = socket.handshake.query.feedname;
+        var trash_chan = 'new_trash-' + feedname;
+
         // Functions called by the publishers
         console.log("Publisher logged in");
         var write_queue = redis.createClient();
@@ -116,7 +139,7 @@ module.exports = function(io) {
             }
             data.stamp = (new Date()).toDateString();
             
-            write_queue.publish('new_trash', JSON.stringify(data));
+            write_queue.publish(trash_chan, JSON.stringify(data));
         });
         
         socket.on('disconnect', function() {

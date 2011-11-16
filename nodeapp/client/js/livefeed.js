@@ -7,9 +7,13 @@ var LIVELY = LIVELY || {};
 if (LIVELY.root_url === undefined) {
     LIVELY.root_url = 'http://lively.abourget.net';
 }
+if (LIVELY.feed_name === undefined) {
+    LIVELY.feed_name = '';
+}
 
 LIVELY.init = function($) { /* start module */
     var livefeed;
+    var feedname = LIVELY.feed_name;
 
     function commenter_text_keypress(e) {
         if(e.which == 13) {
@@ -40,7 +44,7 @@ LIVELY.init = function($) { /* start module */
           </div>');
     
         // Define socket connection
-        livefeed = LIVELY.io.connect(LIVELY.root_url + '/livefeed', {'transports': ['jsonp-polling', 'websocket']});
+        livefeed = LIVELY.io.connect(LIVELY.root_url + '/livefeed?feedname=' + feedname, {'transports': ['jsonp-polling', 'websocket']});
 
         // Define socket events
         livefeed.on('new_item', function(data) {
