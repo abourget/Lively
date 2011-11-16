@@ -1,6 +1,8 @@
+{>layout/}
+{<body}
     <!-- this is inserted in the layout.html -->
 
-    <h2>This is my own content</h2>    
+    <h2>This is my own content: {bob}</h2>    
 
     <p>Here comes the LIVELY feed:</p>
     <div id="LIVELY-cnt"></div>
@@ -15,5 +17,8 @@
     <p>Back to my content</p>
 
     <p>Glad you're using my site</p>
+{/body}
 
-
+{<title}
+Welcome
+{/title}

@@ -60,15 +60,12 @@ function ensureEvent(event_param, permission) {
 module.exports = function(app) {
 
     app.get('/', function(req, res) {
-        res.render('index.html', {
-            locals: {bob: 'go',
-                     title: "Welcome to this page that includes Lively"},
-        });
+        res.render('index', {bob: 'go',
+                     title: "Welcome to this page that includes Lively"});
     });
 
     app.get('/publisher/:event_id', ensureEvent('event_id', 'publish'), function(req, res, next) {
-        res.render("publisher.html", {locals: {event: req.event},
-                                      layout: false});
+        res.render("publisher", {event: req.event});
     });
 
     app.get('/mytest', function(req, res) {
@@ -82,7 +79,7 @@ module.exports = function(app) {
             .set('created_at', new Date())
             .set('_id', 'japan2011');
         e.save()
-        res.render('thanks.html', {thanks: 'ok'});
+        res.render('thanks', {thanks: 'ok'});
     });
 
     app.post('/mobile/publisher.html', function(req, res) {

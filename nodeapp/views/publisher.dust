@@ -47,7 +47,7 @@
 	
         <div id="publisher">
         <!-- Ici on va avoir les contrôles pour ENVOYER des choses -->
-          <h2 style="width: 80%">Publisher for {{#event}}{{name}}{{/event}}</h2>
+          <h2 style="width: 80%">Publisher for {#event}{.name}{/event}</h2>
             
 
           <div class="content-wrapper">
@@ -114,9 +114,6 @@
     </footer>
   </div> <!--! end of #container -->
     
-
-{{! Tell mustache to NOT interprete those templates, that must go DIRECTLY to the client }}
-{{=<% %>=}}
 
   <!-- Template snippets -->
   <script id="moderator_wrapper" type="text/html">
@@ -213,9 +210,6 @@
   </script>
 
 
-<%={{ }}=%>
-{{! Ok, reset the default behavior for Mustache }}
-
 
   <!-- JavaScript at the bottom for fast page loading -->
 
@@ -231,7 +225,7 @@
 
   <script>
     var LIVELY = LIVELY || {};
-    LIVELY.feed_name = '{{#event}}{{_id}}{{/event}}';
+    LIVELY.feed_name = '{#event}{._id}{/event}';
   </script>
   <script defer src="/js/publisher.js"></script>
   <!-- end scripts-->

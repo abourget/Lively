@@ -1,14 +1,15 @@
 var mongooseAuth = require('mongoose-auth');
 var stylus = require('stylus');
+var express_dust = require('express-dust');
+var dust = require('dust');
 
 /**
  * Default configuration manager
  * Inject app and express reference
  */
 module.exports = function(app,express) {
-
-    app.set('view engine', 'mustache')
-    app.register(".html", require('stache'));
+    //app.set('view engine', 'mustache')
+    //app.register(".html", require('stache'));
     app.use(express.logger('default'));
     app.use(express.bodyParser());
     app.use(express.cookieParser());
