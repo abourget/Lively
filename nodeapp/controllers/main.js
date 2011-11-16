@@ -1,42 +1,11 @@
 var formidable = require('formidable');
-var uuid = require('node-uuid');
-var fs = require('fs');
-var child_process = require('child_process');
 var mongoose = require('mongoose')
+var images = require('../lib/images.js');
 var ObjectId = mongoose.Types.ObjectId;
 // Load models
 var User = mongoose.model('User');
 var Event = mongoose.model('Event');
 
-
-function saveUploadedImage(data) {
-    // Save the img to disk
-    var type_data = data.split(';');
-    var mime_type = type_data[0].split(':')[1];
-    var base64_data = type_data[1].split(',')[1];
-    var this_uuid = uuid();
-    if (mime_type == 'image/jpeg') {
-        ext = ".jpg";
-    } else if (mime_type == 'image/png') {
-        ext = ".png";
-    } else if (mime_type == 'image/gif') {
-        ext = ".gif";
-    }
-    var path = '/images/' + this_uuid + ext
-    var filename = __dirname + '/client' + path;
-    var decoded = new Buffer(base64_data, 'base64');
-    fs.writeFile(filename, decoded, function(err) {
-        if (!err) { console.log("File saved"); }
-        else { console.log("Ouch, file not saved"); }
-    });
-    
-    var newdata = {type: "img_src",
-                   src: path,
-                   large_src: large_path};
-    var absfile = filename;
-    
-    return {data: newdata, absfile: absfile};
-};
 
 
 /**
@@ -91,7 +60,7 @@ module.exports = function(app) {
             //res.write('received upload:\n\n');
             //res.end(sys.inspect({fields: fields, files: files}));
             //return;
-            var saved = self.saveUploadedImage(fields.image_content);
+            var saved = images.saveUploadedImage(fields.image_content);
             var newdata = saved.data;
             var absfile = saved.absfile;
             var done = function() {
@@ -105,8 +74,6 @@ module.exports = function(app) {
                 res.end("back to form");
             };
             done();
-            //child_process.exec("jhead -autorot " + absfile + "; ");
-
         });
         return;
 

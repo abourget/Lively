@@ -1,4 +1,5 @@
 var redis = require('redis');
+var images = require('../lib/images.js');
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 // load models
@@ -6,6 +7,8 @@ var User = mongoose.model('User');
 var Event = mongoose.model('Event');
 var Livefeed = mongoose.model('Livefeed');
 var Nugget = mongoose.model('Nugget');
+
+// Load helpers
 
 module.exports = function(io) {
 
@@ -131,7 +134,7 @@ module.exports = function(io) {
             // Send something to the ADMIN queues
             if (data.type == 'img') {
                 // Save the img to disk
-                var saved = self.saveUploadedImage(data.data);
+                var saved = images.saveUploadedImage(data.data);
                 var newdata = saved.data
                 var absfile = saved.absfile
                 // Replace the message with the LINK to the image
