@@ -104,7 +104,8 @@ module.exports = function(app) {
                 res.writeHead(302, {location: req.headers.referer});
                 res.end("back to form");
             };
-            child_process.exec("jhead -autorot " + absfile + "; ");
+            done();
+            //child_process.exec("jhead -autorot " + absfile + "; ");
 
         });
         return;
