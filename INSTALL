@@ -7,13 +7,14 @@ npm install mime
 npm install node-uuid
 npm install formidable
 npm install express
-npm install stache
+#npm install stache - not used anymore, we use 'dust' instead
 npm install mongodb
 npm install mongoose
 npm install stylus
 npm install mongoose-auth
 npm install everyauth
-
+npm install express-dust
+npm install dust
 
 
 

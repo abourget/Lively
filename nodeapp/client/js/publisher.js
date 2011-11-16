@@ -293,21 +293,25 @@ $(document).ready(function(){
     // TODO: put this in the enable_moderator() code
     moderator.on('new_trash', function(data) {
         console.log("New trash", data);
-        var inner_tpl = ich['snippet_' + data.type](data);
-        var tpl = ich.moderator_wrapper({inner_tpl: inner_tpl.outerHTML(),
-                                         data: data});
-        $(tpl, '.datanode').data('data', data);
-        var el = $('#live_trash').append(tpl);
-        attach_nugget_dnd(tpl[0], data);  // Allow streaming trash to be used
+        var inner_tpl = dust.render('snippet_' + data.type, data, function(err, inner_tpl) {
+            var tpl = dust.render('moderator_wrapper', {inner_tpl: inner_tpl, data: data}, function(err, tpl_html) {
+                var tpl = $(tpl_html);
+                $(tpl, '.datanode').data('data', data);
+                var el = $('#live_trash').append(tpl);
+                attach_nugget_dnd(tpl[0], data);  // Allow streaming trash to be used
+            });
+        });
     });
     moderator.on('new_nugget', function(data) {
         console.log("New nugget", data);
-        var inner_tpl = ich['snippet_' + data.type](data);
-        var tpl = ich.nugget_wrapper({inner_tpl: inner_tpl.outerHTML(),
-                                      data: data});
-        $(tpl, '.datanode').data('data', data);
-        var el = $('#nuggets').append(tpl);
-        attach_nugget_dnd(tpl[0], data);
+        var inner_tpl = dust.render('snippet_' + data.type, data, function(err, inner_tpl) {
+            var tpl = dust.render('nugget_wrapper', {inner_tpl: inner_tpl, data: data}, function(err, tpl_html) {
+                var tpl = $(tpl_html);
+                $(tpl, '.datanode').data('data', data);
+                var el = $('#nuggets').append(tpl);
+                attach_nugget_dnd(tpl[0], data);  // Allow streaming trash to be used
+            });
+        });
     });
 	
     // TODO; see http://html5demos.com/js/h5utils.js  for addEvent polyfill
@@ -323,8 +327,10 @@ $(document).ready(function(){
         var data = getDataTransfer(e);
         if (data.type == 'template') {
             var tpl_name = data.cnt;
-            $('#broadcast').html(ich['template_' + tpl_name]({}));
-            set_bindings_broadcaster();
+            dust.render('template_' + tpl_name, {}, function(err, tpl) {
+                $('#broadcast').html(tpl);
+                set_bindings_broadcaster();
+            });
         }
 
         remove_over_class('template')(e);
@@ -348,12 +354,12 @@ $(document).ready(function(){
 
     // Add handlers for the templates tags
     var tpl_srcs = document.querySelectorAll('.template_src');
-    console.log("Tpl items", tpl_srcs);
+    //console.log("Tpl items", tpl_srcs);
     for (var i = 0; i < tpl_srcs.length; i++) {
         tpl_srcs[i].addEventListener('dragstart', function (e) {
             // store the ID of the element, and collect it on the drop later on
             var data = {type: 'template', cnt: $(this).data('tplname')}
-            console.log("setting data on the TPL_SRC event obj", data);
+            //console.log("setting data on the TPL_SRC event obj", data);
             setDataTransfer(e, data);
             return false;
         });
