@@ -8,7 +8,19 @@ var fs = require('fs');
  * Images manip. library
  */
 
-var saveUploadedImage = function(data) {
+
+/**
+ * This function makes everything necessary to add an image to the flow
+ * It will write the image, rotate it, do all the dirty work, and then
+ * publish to the specified queue that a new_trash was added.
+ * takes as parameters:
+ * - data: the data object as sent by the client
+ * - feedname: the name of the feed
+ * - trash_chan: the queue to publish to when its done
+ * - redis: the redis connexion
+ * - next: the function to call when we're done (optional)
+ */
+var processUploadedImage = function(data, feedname, trash_chan, redis, next) {
     // Save the img to disk
     var type_data = data.split(';');
     var mime_type = type_data[0].split(':')[1];
@@ -31,11 +43,16 @@ var saveUploadedImage = function(data) {
     
     var newdata = {type: "img_src",
                    src: path,
-                   large_src: "large_path"};
+                   large_src: "large_path",
+                   stamp: (new Date()).toDateString()};
+
     var absfile = filename;
-    
-    return {data: newdata, absfile: absfile};
+
+
+    redis.publish(trash_chan, JSON.stringify(newdata));
+
+    if (next) { next(); }
 };
 
 
-module.exports = {saveUploadedImage: saveUploadedImage}
+module.exports = {processUploadedImage: processUploadedImage}
