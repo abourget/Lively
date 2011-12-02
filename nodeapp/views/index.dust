@@ -5,7 +5,7 @@
     <h2>This is my own content: {bob}</h2>    
 
     <p>Here comes the LIVELY feed:</p>
-    <div id="LIVELY-cnt"></div>
+    <div id="LIVELY-cnt" style="width:400px;"></div>
     <script>
       var LIVELY = LIVELY || {};
       LIVELY.feed_name = 'japan2011';
