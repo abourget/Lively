@@ -16,5 +16,8 @@ npm install everyauth
 npm install express-dust
 npm install dust
 
+System dependencies
+-------------------
 
-
+redis-server
+mongodb
