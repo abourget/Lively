@@ -52,6 +52,7 @@ module.exports = function(app) {
     });
 
     app.post('/mobile/publisher.html', function(req, res) {
+        var feedname = req.params.feedname;
         var form = new formidable.IncomingForm();
         form.parse(req, function(err, fields, files) {
             // TODO: Verify the POST type.. 
@@ -60,20 +61,13 @@ module.exports = function(app) {
             //res.write('received upload:\n\n');
             //res.end(sys.inspect({fields: fields, files: files}));
             //return;
-            var saved = images.saveUploadedImage(fields.image_content);
-            var newdata = saved.data;
-            var absfile = saved.absfile;
-            var done = function() {
-                // Push to queue
-                var write_queue = redis.createClient();
-                write_queue.publish('new_trash', JSON.stringify(newdata));
+            var write_queue = redis.createClient();
+            var saved = images.processUploadedImage(fields.image_content, feedname, "new_trash-" + feedname, write_queue, function() {
                 write_queue.quit();
-                // Show the same file.
-                // Redirect to the REFERER URL.
-                res.writeHead(302, {location: req.headers.referer});
-                res.end("back to form");
-            };
-            done();
+                res.redirect('back');
+                //res.writeHead(302, {location: req.headers.referer});
+                //res.end("back to form");
+            });
         });
         return;
 

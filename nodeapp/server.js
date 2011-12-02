@@ -24,6 +24,7 @@ var mongoose = require('mongoose');
 
 // New server
 var app = express.createServer();
+//var app.root_path = __dirname;
 
 // Configure the app
 require(__dirname + '/conf/configuration.js')(app, express);

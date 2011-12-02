@@ -134,11 +134,8 @@ module.exports = function(io) {
             // Send something to the ADMIN queues
             if (data.type == 'img') {
                 // Save the img to disk
-                var saved = images.saveUploadedImage(data.data);
-                var newdata = saved.data
-                var absfile = saved.absfile
-                // Replace the message with the LINK to the image
-                data = newdata;
+                images.processUploadedImage(data.data, feedname, trash_chan, write_queue, null);
+                return;
             }
             data.stamp = (new Date()).toDateString();
             
