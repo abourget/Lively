@@ -24,7 +24,7 @@
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
   <!-- CSS: implied media=all -->
-  <link rel="stylesheet" href="/styl/livefeed.css">
+  <link rel="stylesheet" href="/styl/style.css">
   <!-- end CSS-->
 
   <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
