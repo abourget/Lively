@@ -8,7 +8,9 @@ TODO
 ** Pour pouvoir avoir plusieurs feeds concourrants
 ** Incluant les images et vidéos
 
-* Save the trash and nuggets for reloading...
+* Server-side SAVE of a session
+** Store in a Redis list ?
+** MongoDB Livefeed collection
 
 * Rework l'interface, faire quelques mock-ups ?
 ** Avoir deux panneaux  ?  Un nombre de panneaux X ?  Donner un nom à chaque panneau pour filtrer..
